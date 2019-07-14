@@ -21,7 +21,7 @@ public class LoginPacket extends DataPacket {
 
         if (!BedrockProxy.isCompatible(player.getProtocolVersion())) {
             if (player.getProtocolVersion() > BedrockProxy.PROTOCOL) {
-                BedrockProxy.getInstance().getLogger().info("Protocol:" + (player.getProtocolVersion()));
+                BedrockProxy.getInstance().getLogger().info("Protocol: " + (player.getProtocolVersion()));
 
                 NetworkManager.sendPacket(player, new PlayStatusPacket(PlayStatusPacket.Status.LOGIN_FAILED_SERVER));
                 player.disconnect(ProxyServer.getInstance().getTranslation("outdated_server"));

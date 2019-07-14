@@ -1,15 +1,24 @@
 package com.filiphsandstrom.bedrockproxy.packets;
 
-import lombok.Getter;
-import lombok.Setter;
 import com.filiphsandstrom.bedrockproxy.PacketRegistry;
 import com.filiphsandstrom.bedrockproxy.raknet.RakNetPacket;
 
-@Getter
-@Setter
 public class DisconnectPacket extends DataPacket {
     private boolean hideDisconnectionScreen;
+    public boolean getHideDisconnectionScreen() {
+        return hideDisconnectionScreen;
+    }
+    public void setHideDisconnectionScreen(boolean h) {
+        hideDisconnectionScreen = h;
+    }
+
     private String message;
+    public String getMessage() {
+        return message;
+    }
+    public void setMessage(String m) {
+        message = m;
+    }
 
     public DisconnectPacket() {
         super(PacketRegistry.NetworkType.DISCONNECT_PACKET);

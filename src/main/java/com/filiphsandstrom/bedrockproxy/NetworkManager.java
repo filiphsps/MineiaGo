@@ -46,7 +46,8 @@ public class NetworkManager implements RakNetServerListener {
                 "Survival"
         );
 
-        server = new RakNetServer(BedrockProxy.PORT, limit, id);
+        server = new RakNetServer(BedrockProxy.PORT, limit);
+        server.setIdentifier(id);
         server.setListener(this);
 
         server.startThreaded();
