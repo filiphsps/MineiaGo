@@ -3,8 +3,8 @@ package com.filiphsandstrom.bedrockproxy.packets;
 import io.netty.buffer.ByteBuf;
 import com.filiphsandstrom.bedrockproxy.BedrockPlayer;
 import com.filiphsandstrom.bedrockproxy.PacketRegistry;
-import com.filiphsandstrom.bedrockproxy.raknet.Packet;
-import com.filiphsandstrom.bedrockproxy.raknet.RakNetPacket;
+import com.whirvis.jraknet.Packet;
+import com.whirvis.jraknet.RakNetPacket;
 
 public class DataPacket extends RakNetPacket {
     protected BedrockPlayer player;
@@ -41,14 +41,14 @@ public class DataPacket extends RakNetPacket {
     }
 
     public void writeBytes(byte[] bytes) {
-        writeUInt(bytes.length);
+        writeUnsignedInt(bytes.length);
         for (byte b : bytes) {
             writeByte(b);
         }
     }
 
     public byte[] readBytes() {
-        int len = readUShort();
+        int len = readUnsignedShort();
         if (buffer().readerIndex() + len > buffer().readableBytes()) {
             throw new RuntimeException("I can't read " + (buffer().readableBytes() - buffer().readerIndex() + len) + " bytes!");
         }

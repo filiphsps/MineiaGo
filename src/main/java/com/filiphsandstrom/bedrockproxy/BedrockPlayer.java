@@ -2,7 +2,7 @@ package com.filiphsandstrom.bedrockproxy;
 
 import lombok.Data;
 import com.filiphsandstrom.bedrockproxy.packets.DisconnectPacket;
-import com.filiphsandstrom.bedrockproxy.raknet.session.RakNetClientSession;
+import com.whirvis.jraknet.session.RakNetClientSession;
 
 import java.util.HashMap;
 

@@ -2,7 +2,7 @@ package com.filiphsandstrom.bedrockproxy.packets;
 
 import com.filiphsandstrom.bedrockproxy.BedrockProxy;
 import com.filiphsandstrom.bedrockproxy.NetworkManager;
-import com.filiphsandstrom.bedrockproxy.raknet.RakNetPacket;
+import com.whirvis.jraknet.RakNetPacket;
 import net.md_5.bungee.api.ProxyServer;
 
 public class LoginPacket extends DataPacket {
@@ -12,16 +12,22 @@ public class LoginPacket extends DataPacket {
 
     @Override
     public void decode() {
+        BedrockProxy.getInstance().getLogger().info("decoding..");
+
         if (player.isLoggedIn())
             return;
-        buffer().readerIndex(1);
 
-        player.setGameEdition(readUByte());
-        player.setProtocolVersion(readUShortLE());
+        buffer().readerIndex(0);
+        
+        player.setProtocolVersion(readInt());
+        byte[] data = readBytes();
+        
+        player.setGameEdition(readUnsignedByte());
 
         if (!BedrockProxy.isCompatible(player.getProtocolVersion())) {
             if (player.getProtocolVersion() > BedrockProxy.PROTOCOL) {
                 BedrockProxy.getInstance().getLogger().info("Protocol: " + (player.getProtocolVersion()));
+                BedrockProxy.getInstance().getLogger().info("GameEditior: " + (player.getGameEdition()));
 
                 NetworkManager.sendPacket(player, new PlayStatusPacket(PlayStatusPacket.Status.LOGIN_FAILED_SERVER));
                 player.disconnect(ProxyServer.getInstance().getTranslation("outdated_server"));

@@ -2,9 +2,9 @@ package com.filiphsandstrom.bedrockproxy.packets;
 
 import com.filiphsandstrom.bedrockproxy.Compression;
 import com.filiphsandstrom.bedrockproxy.PacketRegistry;
-import com.filiphsandstrom.bedrockproxy.raknet.RakNetPacket;
+import com.whirvis.jraknet.RakNetPacket;
 
-import java.util.zip.DataFormatException;
+import io.netty.buffer.*;
 
 public class BatchPacket extends DataPacket {
     public BatchPacket() {
@@ -20,8 +20,13 @@ public class BatchPacket extends DataPacket {
         if (buffer().readableBytes() < 2) return;
 
         try {
-            setBuffer(Compression.inflate(buffer()));
-        } catch (DataFormatException e) {
+            ByteBuf Buffer = Compression.inflate(buffer());
+
+            byte[] buf = new byte[Buffer.readableBytes()];
+            Buffer.readBytes(buf);
+
+            setBuffer(buf);
+        } catch (Exception e) {
             e.printStackTrace();
             return;
         }

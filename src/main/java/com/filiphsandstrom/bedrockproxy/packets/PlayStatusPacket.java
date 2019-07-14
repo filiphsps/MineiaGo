@@ -3,7 +3,7 @@ package com.filiphsandstrom.bedrockproxy.packets;
 import lombok.Getter;
 import lombok.Setter;
 import com.filiphsandstrom.bedrockproxy.PacketRegistry;
-import com.filiphsandstrom.bedrockproxy.raknet.RakNetPacket;
+import com.whirvis.jraknet.RakNetPacket;
 
 public class PlayStatusPacket extends DataPacket {
     @Getter
