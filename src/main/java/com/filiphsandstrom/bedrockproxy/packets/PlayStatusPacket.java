@@ -1,14 +1,16 @@
 package com.filiphsandstrom.bedrockproxy.packets;
 
-import lombok.Getter;
-import lombok.Setter;
 import com.filiphsandstrom.bedrockproxy.PacketRegistry;
 import com.whirvis.jraknet.RakNetPacket;
 
 public class PlayStatusPacket extends DataPacket {
-    @Getter
-    @Setter
     private Status status;
+    public Status getStatus() {
+        return status;
+    }
+    public void setStatus(Status s) {
+        status = s;
+    }
 
     public PlayStatusPacket(Status status) {
         super(PacketRegistry.NetworkType.PLAY_STATUS_PACKET);
@@ -33,8 +35,10 @@ public class PlayStatusPacket extends DataPacket {
         LOGIN_FAILED_VANILLA_EDU(5),
         LOGIN_FAILED_EDU_VANILLA(6);
 
-        @Getter
         private final int id;
+        public final int getId() {
+            return id;
+        }
 
         Status(int id) {
             this.id = id;
