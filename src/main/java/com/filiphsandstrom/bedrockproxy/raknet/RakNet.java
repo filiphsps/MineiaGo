@@ -38,8 +38,8 @@ package com.filiphsandstrom.bedrockproxy.raknet;
 public class RakNet {
 
     // Network protocol data
-    public static final int SERVER_NETWORK_PROTOCOL = 8;
-    public static final int CLIENT_NETWORK_PROTOCOL = 8;
+    public static final int SERVER_NETWORK_PROTOCOL = 9;
+    public static final int CLIENT_NETWORK_PROTOCOL = 9;
 
     // Maximum Transfer Unit data
     public static final int MINIMUM_TRANSFER_UNIT = 548;
