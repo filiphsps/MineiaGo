@@ -13,9 +13,9 @@ import java.util.Base64;
 
 public final class BedrockProxy extends Plugin {
     // Constants
-    public static final int PROTOCOL = 137;
+    public static final int PROTOCOL = 361;
     public static final int PORT = 19132;
-    public static final String VERSION = "1.2.0";
+    public static final String VERSION = "1.12.0";
 
     private static final int[] COMPATIBLE_PROTOCOL_VERSIONS = new int[]{PROTOCOL};
 
