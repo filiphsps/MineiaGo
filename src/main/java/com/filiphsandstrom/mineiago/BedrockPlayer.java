@@ -9,7 +9,12 @@ import com.github.steveice10.packetlib.tcp.TcpSessionFactory;
 import com.nukkitx.protocol.bedrock.BedrockServerSession;
 
 public class BedrockPlayer {
+    public BedrockPlayer() {
+        super();
+    }
     public BedrockPlayer(BedrockServerSession bedrock_session) {
+        super();
+        
         setBedrockSession(bedrock_session);
 
         // TODO: offline mode, direct connect to child server if enabled.
