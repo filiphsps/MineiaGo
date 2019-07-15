@@ -12,13 +12,7 @@ public class BedrockPlayer {
     public BedrockPlayer(BedrockServerSession bedrock_session) {
         setBedrockSession(bedrock_session);
 
-        try {
-            MinecraftProtocol protocol = new MinecraftProtocol("todo", "todo");
-            Client client = new Client("0.0.0.0", 25565, protocol, new TcpSessionFactory(Proxy.NO_PROXY));
-            setJavaSession(client.getSession());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // TODO: offline mode, direct connect to child server if enabled.
     }
     
     private BedrockServerSession bedrock_session;
@@ -35,5 +29,16 @@ public class BedrockPlayer {
     }
     public void setJavaSession(Session session) {
         java_session = session;
+    }
+
+    // FIXME: only run once we've gotten auth details from client
+    public void createJavaClient() {
+        try {
+            MinecraftProtocol protocol = new MinecraftProtocol("todo", "todo");
+            Client client = new Client("0.0.0.0", 25565, protocol, new TcpSessionFactory(Proxy.NO_PROXY));
+            setJavaSession(client.getSession());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
