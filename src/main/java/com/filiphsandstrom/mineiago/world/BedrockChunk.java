@@ -18,9 +18,9 @@ public class BedrockChunk {
 
     public void setRandom() throws FileNotFoundException {
         try {
-            InputStream in = getClass().getResourceAsStream("/chunk"); 
+            //InputStream in = getClass().getResourceAsStream("/chunk"); 
 
-            byte[] chunk = in.readAllBytes();
+            byte[] chunk = {0}; //in.readAllBytes();
             data = chunk;
         } catch (Exception e) {
             e.printStackTrace();
