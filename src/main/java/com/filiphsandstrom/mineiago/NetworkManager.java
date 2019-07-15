@@ -1,8 +1,6 @@
 package com.filiphsandstrom.mineiago;
 
-import com.filiphsandstrom.mineiago.packets.DataPacket;
-import com.filiphsandstrom.mineiago.PacketRegistry.NetworkType;
-
+import com.filiphsandstrom.mineiago.PacketRegistry;
 import com.nukkitx.protocol.bedrock.*;
 
 import net.md_5.bungee.api.ProxyServer;
@@ -44,7 +42,7 @@ public class NetworkManager {
             @Override
             public void onSessionCreation(BedrockServerSession serverSession) {
                 // serverSession.addDisconnectHandler(() -> System.out.println("Disconnected"));
-                // serverSession.setPacketHandler(PacketRegistry.handlePacket);
+                serverSession.setPacketHandler(PacketRegistry.handler);
             }
         });
 
