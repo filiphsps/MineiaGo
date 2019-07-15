@@ -14,7 +14,8 @@ This the current author's ([@filfat](https://github.com/filfat)) first project i
 ## How it's intended to work
 ![Diagram](http://i.imgur.com/rUOl3fo.png)
 
-## Usefull resources
+## Useful resources
+* [NukkitX/Protocol](https://github.com/NukkitX/Protocol)
 * [MiNET](https://github.com/NiclasOlofsson/MiNET/blob/master/src/MiNET/MiNET/Net/MCPE%20Protocol%20Documentation.md)
 * [pmmp](https://github.com/pmmp/PocketMine-MP/blob/master/src/pocketmine/network/mcpe/protocol/ProtocolInfo.php)
 * [minecraft-bedrock-documentation](https://github.com/MisteFr/minecraft-bedrock-documentation)
