@@ -15,7 +15,6 @@ import com.nukkitx.protocol.bedrock.packet.PlayStatusPacket.Status;
 import com.nukkitx.protocol.bedrock.packet.SetSpawnPositionPacket.Type;
 
 import lombok.NonNull;
-import org.apache.commons.io.IOUtils;
 
 public class PacketRegistry {
     public BedrockPlayer player;
