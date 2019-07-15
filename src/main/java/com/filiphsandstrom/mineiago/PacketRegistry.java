@@ -21,6 +21,9 @@ public class PacketRegistry {
         @Override
         public boolean handle(LoginPacket packet) {
             MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->LoginPacket");
+
+            // TODO: handle chainData
+            MineiaGo.getInstance().getLogger().info(packet.toString());
             
             PlayStatusPacket status = new PlayStatusPacket();
             status.handle(handler);

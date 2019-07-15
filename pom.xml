@@ -72,6 +72,10 @@
 
     <repositories>
         <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+        <repository>
             <id>projectlombok.org</id>
             <url>http://projectlombok.org/mavenrepo/</url>
         </repository>
@@ -107,6 +111,13 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.16.22</version>
+        </dependency>
+
+        <!-- Minecraft protocol -->
+        <dependency>
+            <groupId>com.github.Steveice10</groupId>
+            <artifactId>mcprotocollib</artifactId>
+            <version>-SNAPSHOT</version>
         </dependency>
 
         <!-- Nukkitx protocol -->
