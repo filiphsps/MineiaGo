@@ -1,5 +1,7 @@
 package com.filiphsandstrom.mineiago;
 
+import java.util.Arrays;
+
 import com.flowpowered.math.vector.Vector2f;
 import com.flowpowered.math.vector.Vector3f;
 import com.flowpowered.math.vector.Vector3i;
@@ -31,9 +33,10 @@ public class PacketRegistry {
             game.setUniqueEntityId(-1);
             game.setRuntimeEntityId(-1);
             game.setPlayerGamemode(0);
-            game.setPlayerPosition(new Vector3f(0, 0, 0));
+            game.setPlayerPosition(new Vector3f(0, 50, 0));
             game.setRotation(new Vector2f(0, 0));
-            game.setDefaultSpawn(new Vector3i(0, 0, 0));
+            game.setDefaultSpawn(new Vector3i(0, 50, 0));
+            game.setMultiplayerGame(true);
             game.setXblBroadcastMode(GamePublishSetting.PUBLIC);
             game.setPlatformBroadcastMode(GamePublishSetting.PUBLIC);
             game.setLevelId("MinieaGo");
@@ -97,6 +100,21 @@ public class PacketRegistry {
         @Override
         public boolean handle(ChunkRadiusUpdatedPacket packet) {
             MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->ChunkRadiusUpdatedPacket");
+
+            // TODO: flatland
+            byte[] data = new byte[16*16*256];
+            Arrays.fill(data, (byte)0);
+
+            LevelChunkPacket chunk = new LevelChunkPacket();
+            chunk.handle(handler);
+            chunk.setChunkX(0);
+            chunk.setChunkZ(0);
+            chunk.setData(data);
+            return true;
+        }
+        @Override
+        public boolean handle(LevelChunkPacket packet) {
+            MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->LevelChunkPacket");
             return true;
         }
 
