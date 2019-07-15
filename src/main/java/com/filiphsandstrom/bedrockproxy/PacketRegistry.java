@@ -37,7 +37,7 @@ public class PacketRegistry {
         CLIENT_TO_SERVER_HANDSHAKE_PACKET(0x04),
         DISCONNECT_PACKET(0x05, DisconnectPacket.class),
 
-        START_GAME_PACKET(0x0b),
+        START_GAME_PACKET(0x0b, StartGamePacket.class),
         ADD_PLAYER_PACKET(0x0c),
         
         BATCH_PACKET(0xFE, BatchPacket.class);

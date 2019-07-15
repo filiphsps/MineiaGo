@@ -49,6 +49,7 @@ public class NetworkManager implements RakNetServerListener {
 
     public static void sendPacket(BedrockPlayer player, DataPacket packet) {
         sendPacket(player.getSession(), packet);
+        BedrockProxy.getInstance().getLogger().info("[" + player.getSession().getAddress() + "] Wrote 0x" + Integer.toHexString(packet.getId()).toUpperCase());
     }
 
     @Override

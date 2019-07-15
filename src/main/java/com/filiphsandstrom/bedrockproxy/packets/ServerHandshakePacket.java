@@ -22,7 +22,7 @@ public class ServerHandshakePacket extends DataPacket {
     public ServerHandshakePacket(BedrockPlayer p) {
         super(PacketRegistry.NetworkType.SERVER_TO_CLIENT_HANDSHAKE_PACKET);
 
-        try {
+        /* try {
             KeyPairGenerator generator = KeyPairGenerator.getInstance("EC");
             generator.initialize(new ECGenParameterSpec("secp384r1"));
             KeyPair serverKeyPair = generator.generateKeyPair();
@@ -35,7 +35,7 @@ public class ServerHandshakePacket extends DataPacket {
             serverToken = token;
         } catch (NoSuchAlgorithmException | InvalidAlgorithmParameterException | InvalidKeyException e) {
             e.printStackTrace();
-        }
+        } */
     }
 
     @Override

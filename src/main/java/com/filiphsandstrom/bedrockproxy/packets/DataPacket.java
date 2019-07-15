@@ -52,6 +52,7 @@ public class DataPacket extends RakNetPacket {
         if (buffer().readerIndex() + len > buffer().readableBytes()) {
             throw new RuntimeException("I can't read " + (buffer().readableBytes() - buffer().readerIndex() + len) + " bytes!");
         }
+        
         byte[] r = new byte[len];
         read(r);
         return r;
