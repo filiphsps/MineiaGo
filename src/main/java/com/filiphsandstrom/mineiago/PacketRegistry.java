@@ -2,6 +2,7 @@ package com.filiphsandstrom.mineiago;
 
 import java.util.Arrays;
 
+import com.filiphsandstrom.mineiago.world.BedrockChunk;
 import com.flowpowered.math.vector.Vector2f;
 import com.flowpowered.math.vector.Vector3f;
 import com.flowpowered.math.vector.Vector3i;
@@ -103,8 +104,8 @@ public class PacketRegistry {
         public boolean handle(ChunkRadiusUpdatedPacket packet) {
             MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->ChunkRadiusUpdatedPacket");
 
-            // TODO: flatland
-            byte[] data = new byte[16*16*256];
+            BedrockChunk Chunk = new BedrockChunk();
+            byte[] data = Chunk.getRaw();
             Arrays.fill(data, (byte)0);
 
             LevelChunkPacket chunk = new LevelChunkPacket();
