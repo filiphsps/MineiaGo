@@ -59,7 +59,6 @@ public class PacketRegistry {
             player.getBedrockSession().sendPacket(game);
 
             SetSpawnPositionPacket spawn = new SetSpawnPositionPacket();
-            spawn.handle(handler);
             spawn.setBlockPosition(new Vector3i(0, 75, 0));
             spawn.setSpawnForced(true);
             spawn.setSpawnType(Type.WORLD_SPAWN);
@@ -166,33 +165,35 @@ public class PacketRegistry {
             chunks.setRadius(22);
             player.getBedrockSession().sendPacket(chunks);
 
-            BedrockChunk Chunk = new BedrockChunk();
-            try {
-                Chunk.setRandom();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            Collection<BedrockPacket> chunk_packets = new ArrayList<BedrockPacket>();
-            for (int x = -1; x <= 1; x++) {
-                for (int y = -1; y <= 1; y++) {
-                    LevelChunkPacket chunk = new LevelChunkPacket();
-                    chunk.handle(handler);
-                    chunk.setData(Chunk.getRaw());
-
-                    chunk.setChunkX(x);
-                    chunk.setChunkZ(y);
-                    chunk.setSubChunksLength(0);
-                    chunk.setCachingEnabled(false);
-                    chunk_packets.add(chunk);
+            if(!player.isAuthenticated()) {
+                BedrockChunk Chunk = new BedrockChunk();
+                try {
+                    Chunk.setRandom();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            }
-            player.getBedrockSession().sendWrapped(chunk_packets, false);
 
-            PlayStatusPacket status = new PlayStatusPacket();
-            status.handle(handler);
-            status.setStatus(Status.PLAYER_SPAWN);
-            player.getBedrockSession().sendPacket(status);
+                Collection<BedrockPacket> chunk_packets = new ArrayList<BedrockPacket>();
+                for (int x = -1; x <= 1; x++) {
+                    for (int y = -1; y <= 1; y++) {
+                        LevelChunkPacket chunk = new LevelChunkPacket();
+                        chunk.handle(handler);
+                        chunk.setData(Chunk.getRaw());
+
+                        chunk.setChunkX(x);
+                        chunk.setChunkZ(y);
+                        chunk.setSubChunksLength(0);
+                        chunk.setCachingEnabled(false);
+                        chunk_packets.add(chunk);
+                    }
+                }
+                player.getBedrockSession().sendWrapped(chunk_packets, false);
+
+                PlayStatusPacket status = new PlayStatusPacket();
+                status.handle(handler);
+                status.setStatus(Status.PLAYER_SPAWN);
+                player.getBedrockSession().sendPacket(status);
+            }
             return true;
         }
 
@@ -218,11 +219,13 @@ public class PacketRegistry {
         public boolean handle(MapInfoRequestPacket packet) {
             MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->MapInfoRequestPacket " + packet.toString());
             
-            /* ServerSettingsResponsePacket form = new ServerSettingsResponsePacket();
-            form.handle(handler);
-            form.setFormId(1);
-            form.setFormData("{\"type\":\"custom_form\", \"title\":\"Login to your mojang account!\", \"content\": [{\"type\":\"input\", \"text\":\"Email\", \"placeholder\":\"steve@mojang.com\", \"default\":\"\"}, {\"type\":\"input\", \"text\":\"Password\", \"placeholder\":\"password\", \"default\":\"\"}]}");
-            player.getBedrockSession().sendPacket(form); */
+            if(!player.isAuthenticated()) {
+                ServerSettingsResponsePacket form = new ServerSettingsResponsePacket();
+                form.handle(handler);
+                form.setFormId(1);
+                form.setFormData("{\"type\":\"custom_form\", \"title\":\"Login to your mojang account!\", \"content\": [{\"type\":\"input\", \"text\":\"Email\", \"placeholder\":\"steve@mojang.com\", \"default\":\"\"}, {\"type\":\"input\", \"text\":\"Password\", \"placeholder\":\"password\", \"default\":\"\"}]}");
+                player.getBedrockSession().sendPacket(form);
+            }
             return true;
         }
 

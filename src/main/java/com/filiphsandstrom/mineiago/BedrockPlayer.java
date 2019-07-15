@@ -36,14 +36,33 @@ public class BedrockPlayer {
         java_session = session;
     }
 
+    private String username = "";
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String name) {
+        username = name;
+    }
+    private String password = "";
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String pass) {
+        password = pass;
+    }
+
     // FIXME: only run once we've gotten auth details from client
     public void createJavaClient() {
         try {
-            MinecraftProtocol protocol = new MinecraftProtocol("todo", "todo");
+            MinecraftProtocol protocol = new MinecraftProtocol(username, password);
             Client client = new Client("0.0.0.0", 25565, protocol, new TcpSessionFactory(Proxy.NO_PROXY));
             setJavaSession(client.getSession());
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean isAuthenticated() {
+        return (!password.isEmpty() && !username.isEmpty());
     }
 }
