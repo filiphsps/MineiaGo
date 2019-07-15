@@ -12,13 +12,13 @@ import com.nukkitx.protocol.bedrock.packet.PlayStatusPacket.Status;
 import lombok.NonNull;
 
 public class PacketRegistry {
+    public BedrockServerSession serverSession;
+
     @NonNull
-    public static BedrockPacketHandler handler = new BedrockPacketHandler() {
+    public BedrockPacketHandler handler = new BedrockPacketHandler() {
         @Override
         public boolean handle(LoginPacket packet) {
             MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->LoginPacket");
-
-            BedrockServerSession serverSession = MineiaGo.getInstance().getNetworkManager().getSession();
             
             PlayStatusPacket status = new PlayStatusPacket();
             status.handle(handler);
@@ -42,7 +42,6 @@ public class PacketRegistry {
             game.setMultiplayerCorrelationId("MineiaGo");
             game.setGeneratorId(1);
             serverSession.sendPacket(game);
-
             return true;
         }
 
@@ -61,8 +60,6 @@ public class PacketRegistry {
         @Override
         public boolean handle(StartGamePacket packet) {
             MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->StartGamePacket");
-
-            BedrockServerSession serverSession = MineiaGo.getInstance().getNetworkManager().getSession();
 
             ResourcePacksInfoPacket resource_info = new ResourcePacksInfoPacket();
             resource_info.setForcedToAccept(false);
@@ -88,22 +85,34 @@ public class PacketRegistry {
         }
 
         @Override
+        public boolean handle(RequestChunkRadiusPacket packet) {
+            MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->RequestChunkRadiusPacket");
+
+            ChunkRadiusUpdatedPacket chunks = new ChunkRadiusUpdatedPacket();
+            chunks.handle(handler);
+            chunks.setRadius(packet.getRadius());
+            serverSession.sendPacket(chunks);
+            return true;
+        }
+        @Override
+        public boolean handle(ChunkRadiusUpdatedPacket packet) {
+            MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->ChunkRadiusUpdatedPacket");
+            return true;
+        }
+
+        @Override
         public boolean handle(ResourcePackDataInfoPacket packet) {
             MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->ResourcePackDataInfoPacket");
             return true;
         }
-
         @Override
         public boolean handle(ResourcePackChunkRequestPacket packet) {
             MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->ResourcePackChunkRequestPacket");
             return true;
         }
-
         @Override
         public boolean handle(ResourcePackClientResponsePacket packet) {
-            MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->ResourcePackClientResponsePacket " + packet.toString());
-
-            BedrockServerSession serverSession = MineiaGo.getInstance().getNetworkManager().getSession();
+            MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->ResourcePackClientResponsePacket");
 
             PlayStatusPacket status = new PlayStatusPacket();
             status.handle(handler);
