@@ -1,0 +1,11 @@
+sudo: false
+language: java
+
+jdk:
+  - openjdk11
+
+install: true
+script: ./mvnw clean eclipse:eclipse install
+
+notifications:
+  email: false
