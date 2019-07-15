@@ -59,6 +59,7 @@ public class PacketRegistry {
             player.getBedrockSession().sendPacket(game);
 
             SetSpawnPositionPacket spawn = new SetSpawnPositionPacket();
+            spawn.handle(handler);
             spawn.setBlockPosition(new Vector3i(0, 75, 0));
             spawn.setSpawnForced(true);
             spawn.setSpawnType(Type.WORLD_SPAWN);
@@ -136,11 +137,11 @@ public class PacketRegistry {
 
         @Override
         public boolean handle(MovePlayerPacket packet) {
-            // MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->MovePlayerPacket");W
-            MovePlayerPacket move = new MovePlayerPacket();
+            // MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->MovePlayerPacket");
+            /* MovePlayerPacket move = new MovePlayerPacket();
             move.setPosition(new Vector3f(0.0, 75.0, 0.0));
             move.setOnGround(true);
-            player.getBedrockSession().sendPacket(move);
+            player.getBedrockSession().sendPacket(move); */
             return true;
         }
 

@@ -1,6 +1,7 @@
 package com.filiphsandstrom.mineiago;
 
 import net.md_5.bungee.api.plugin.Plugin;
+import org.bstats.bungeecord.*;
 
 public final class MineiaGo extends Plugin {
     public static final int PROTOCOL = 361;
@@ -18,6 +19,9 @@ public final class MineiaGo extends Plugin {
 
     @Override
     public void onEnable() {
+        // FIXME: make globaly accessible
+        MetricsLite metrics = new MetricsLite(this);
+
         instance = this;
         networkManager = new NetworkManager();
     }

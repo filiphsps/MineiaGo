@@ -1,8 +1,6 @@
 package com.filiphsandstrom.mineiago.world;
 
-import java.util.*;
 import java.io.*;
-import com.filiphsandstrom.mineiago.MineiaGo;
 
 // TODO
 public class BedrockChunk {
@@ -18,9 +16,7 @@ public class BedrockChunk {
 
     public void setRandom() throws FileNotFoundException {
         try {
-            //InputStream in = getClass().getResourceAsStream("/chunk"); 
-
-            byte[] chunk = {0}; //in.readAllBytes();
+            byte[] chunk = {};
             data = chunk;
         } catch (Exception e) {
             e.printStackTrace();

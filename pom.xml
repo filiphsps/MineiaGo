@@ -113,6 +113,13 @@
             <version>1.16.22</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bungeecord-lite</artifactId>
+            <version>1.5</version>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- Minecraft protocol -->
         <dependency>
             <groupId>com.github.Steveice10</groupId>
