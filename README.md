@@ -8,11 +8,17 @@ This the current author's ([@filfat](https://github.com/filfat)) first project i
 * openjdk11
 * maven
 
-## Building
+## Contributing
+Any help is appreciated, but especially with nbt & chunks.
+
+### Building
 ```$ mvn eclipse:eclipse install```
 
+### Running tests
+```$ todo```
+
 ## How it's intended to work
-![Diagram](http://i.imgur.com/rUOl3fo.png)
+![Diagram](https://imgur.com/0NwkI8H.png)
 
 ## Useful resources
 * [NukkitX/Protocol](https://github.com/NukkitX/Protocol)
