@@ -55,7 +55,7 @@ public class NetworkManager {
                 // serverSession.addDisconnectHandler(() -> System.out.println("Disconnected"));
 
                 PacketRegistry packets = new PacketRegistry();
-                packets.serverSession = serverSession;
+                packets.player = player;
                 serverSession.setPacketHandler(packets.handler);
             }
         };

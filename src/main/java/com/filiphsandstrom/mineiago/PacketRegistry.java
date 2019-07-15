@@ -5,7 +5,6 @@ import java.util.Arrays;
 import com.flowpowered.math.vector.Vector2f;
 import com.flowpowered.math.vector.Vector3f;
 import com.flowpowered.math.vector.Vector3i;
-import com.nukkitx.protocol.bedrock.BedrockServerSession;
 import com.nukkitx.protocol.bedrock.data.GamePublishSetting;
 import com.nukkitx.protocol.bedrock.handler.BedrockPacketHandler;
 import com.nukkitx.protocol.bedrock.packet.*;
@@ -14,7 +13,7 @@ import com.nukkitx.protocol.bedrock.packet.PlayStatusPacket.Status;
 import lombok.NonNull;
 
 public class PacketRegistry {
-    public BedrockServerSession serverSession;
+    public BedrockPlayer player;
 
     @NonNull
     public BedrockPacketHandler handler = new BedrockPacketHandler() {
@@ -28,7 +27,7 @@ public class PacketRegistry {
             PlayStatusPacket status = new PlayStatusPacket();
             status.handle(handler);
             status.setStatus(Status.LOGIN_SUCCESS);
-            serverSession.sendPacket(status);
+            player.getBedrockSession().sendPacket(status);
 
             StartGamePacket game = new StartGamePacket();
             game.handle(handler);
@@ -47,7 +46,7 @@ public class PacketRegistry {
             game.setPremiumWorldTemplateId("");
             game.setMultiplayerCorrelationId("MineiaGo");
             game.setGeneratorId(1);
-            serverSession.sendPacket(game);
+            player.getBedrockSession().sendPacket(game);
             return true;
         }
 
@@ -70,11 +69,11 @@ public class PacketRegistry {
             ResourcePacksInfoPacket resource_info = new ResourcePacksInfoPacket();
             resource_info.setForcedToAccept(false);
             resource_info.setScriptingEnabled(false);
-            serverSession.sendPacket(resource_info);
+            player.getBedrockSession().sendPacket(resource_info);
 
             ResourcePackClientResponsePacket resource = new ResourcePackClientResponsePacket();
             resource.setStatus(com.nukkitx.protocol.bedrock.packet.ResourcePackClientResponsePacket.Status.SEND_PACKS);
-            serverSession.sendPacket(resource);
+            player.getBedrockSession().sendPacket(resource);
             return true;
         }
 
@@ -97,7 +96,7 @@ public class PacketRegistry {
             ChunkRadiusUpdatedPacket chunks = new ChunkRadiusUpdatedPacket();
             chunks.handle(handler);
             chunks.setRadius(packet.getRadius());
-            serverSession.sendPacket(chunks);
+            player.getBedrockSession().sendPacket(chunks);
             return true;
         }
         @Override
@@ -138,7 +137,7 @@ public class PacketRegistry {
             PlayStatusPacket status = new PlayStatusPacket();
             status.handle(handler);
             status.setStatus(Status.PLAYER_SPAWN);
-            serverSession.sendPacket(status);
+            player.getBedrockSession().sendPacket(status);
             return true;
         }
     };

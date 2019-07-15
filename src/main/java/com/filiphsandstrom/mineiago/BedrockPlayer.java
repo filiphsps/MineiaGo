@@ -20,23 +20,19 @@ public class BedrockPlayer {
             e.printStackTrace();
         }
     }
-
+    
     private BedrockServerSession bedrock_session;
-
     public BedrockServerSession getBedrockSession() {
         return bedrock_session;
     }
-
     public void setBedrockSession(BedrockServerSession session) {
         bedrock_session = session;
     }
 
     private Session java_session;
-
     public Session getJavaSession() {
         return java_session;
     }
-
     public void setJavaSession(Session session) {
         java_session = session;
     }
