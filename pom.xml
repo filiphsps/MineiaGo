@@ -41,6 +41,13 @@
                 <configuration>
                     <shadedArtifactAttached>true</shadedArtifactAttached>
                     <shadedClassifierName>complete</shadedClassifierName>
+
+                    <relocations>
+                        <relocation>
+                            <pattern>org.bstats</pattern>
+                            <shadedPattern>com.filiphsandstrom</shadedPattern>
+                        </relocation>
+                    </relocations>
                 </configuration>
             </plugin>
             <plugin>
