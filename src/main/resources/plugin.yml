@@ -1,5 +1,5 @@
-name: BedrockProxy
+name: MineiaGo
 version: ${project.version}
-main: com.filiphsandstrom.bedrockproxy.BedrockProxy
-description: Allow MCPE players on your BungeeCord server!
+main: com.filiphsandstrom.mineiago.MineiaGo
+description: Minecraft Bedrock Edition <-> Java Edition using BungeeCord.
 author: filiphsandstrom

@@ -1,7 +1,7 @@
-package com.filiphsandstrom.bedrockproxy.packets;
+package com.filiphsandstrom.mineiago.packets;
 
-import com.filiphsandstrom.bedrockproxy.Compression;
-import com.filiphsandstrom.bedrockproxy.PacketRegistry;
+import com.filiphsandstrom.mineiago.Compression;
+import com.filiphsandstrom.mineiago.PacketRegistry;
 import com.whirvis.jraknet.RakNetPacket;
 
 import io.netty.buffer.*;

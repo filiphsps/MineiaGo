@@ -1,4 +1,4 @@
-package com.filiphsandstrom.bedrockproxy;
+package com.filiphsandstrom.mineiago;
 
 import net.md_5.bungee.api.plugin.Plugin;
 
@@ -10,7 +10,7 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
 import java.util.Base64;
 
-public final class BedrockProxy extends Plugin {
+public final class MineiaGo extends Plugin {
     // Constants
     public static final int PROTOCOL = 361;
     public static final int PORT = 19132;
@@ -18,8 +18,8 @@ public final class BedrockProxy extends Plugin {
 
     private static final int[] COMPATIBLE_PROTOCOL_VERSIONS = new int[]{PROTOCOL};
 
-    private static BedrockProxy instance;
-    public static BedrockProxy getInstance() {
+    private static MineiaGo instance;
+    public static MineiaGo getInstance() {
         return instance;
     }
 

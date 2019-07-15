@@ -1,6 +1,6 @@
-package com.filiphsandstrom.bedrockproxy.packets;
+package com.filiphsandstrom.mineiago.packets;
 
-import com.filiphsandstrom.bedrockproxy.PacketRegistry;
+import com.filiphsandstrom.mineiago.PacketRegistry;
 
 
 public class SetTimePacket extends DataPacket {

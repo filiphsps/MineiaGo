@@ -1,8 +1,8 @@
-package com.filiphsandstrom.bedrockproxy.packets;
+package com.filiphsandstrom.mineiago.packets;
 
-import com.filiphsandstrom.bedrockproxy.BedrockProxy;
-import com.filiphsandstrom.bedrockproxy.NetworkManager;
-import com.filiphsandstrom.bedrockproxy.PacketRegistry;
+import com.filiphsandstrom.mineiago.MineiaGo;
+import com.filiphsandstrom.mineiago.NetworkManager;
+import com.filiphsandstrom.mineiago.PacketRegistry;
 import com.whirvis.jraknet.RakNetPacket;
 
 import net.md_5.bungee.api.ProxyServer;

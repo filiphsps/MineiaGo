@@ -1,6 +1,6 @@
-package com.filiphsandstrom.bedrockproxy.packets;
+package com.filiphsandstrom.mineiago.packets;
 
-import com.filiphsandstrom.bedrockproxy.NetworkManager;
+import com.filiphsandstrom.mineiago.NetworkManager;
 import com.whirvis.jraknet.RakNetPacket;
 
 public class ResourcePackChunkRequestPacket extends DataPacket {

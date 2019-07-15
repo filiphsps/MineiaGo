@@ -1,4 +1,4 @@
-package com.filiphsandstrom.bedrockproxy.utils;
+package com.filiphsandstrom.mineiago.utils;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

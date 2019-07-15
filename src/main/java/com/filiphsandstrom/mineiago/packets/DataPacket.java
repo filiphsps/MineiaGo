@@ -1,8 +1,8 @@
-package com.filiphsandstrom.bedrockproxy.packets;
+package com.filiphsandstrom.mineiago.packets;
 
 import io.netty.buffer.ByteBuf;
-import com.filiphsandstrom.bedrockproxy.BedrockPlayer;
-import com.filiphsandstrom.bedrockproxy.PacketRegistry;
+import com.filiphsandstrom.mineiago.BedrockPlayer;
+import com.filiphsandstrom.mineiago.PacketRegistry;
 import com.whirvis.jraknet.Packet;
 import com.whirvis.jraknet.RakNetPacket;
 

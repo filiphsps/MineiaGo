@@ -1,7 +1,7 @@
-package com.filiphsandstrom.bedrockproxy;
+package com.filiphsandstrom.mineiago;
 
-import com.filiphsandstrom.bedrockproxy.packets.DataPacket;
-import com.filiphsandstrom.bedrockproxy.PacketRegistry.NetworkType;
+import com.filiphsandstrom.mineiago.packets.DataPacket;
+import com.filiphsandstrom.mineiago.PacketRegistry.NetworkType;
 import com.whirvis.jraknet.RakNetPacket;
 import com.whirvis.jraknet.identifier.MinecraftIdentifier;
 import com.whirvis.jraknet.protocol.Reliability;
@@ -28,20 +28,20 @@ public class NetworkManager implements RakNetServerListener {
                 : ProxyServer.getInstance().getConfig().getPlayerLimit();
 
         if (listenerInfo == null) {
-            BedrockProxy.getInstance().getLogger().severe("No listener found! :(");
+            MineiaGo.getInstance().getLogger().severe("No listener found! :(");
             return;
         }
 
-        MinecraftIdentifier id = new MinecraftIdentifier(listenerInfo.getMotd(), BedrockProxy.PROTOCOL,
-                BedrockProxy.VERSION, ProxyServer.getInstance().getOnlineCount(), listenerInfo.getMaxPlayers(),
+        MinecraftIdentifier id = new MinecraftIdentifier(listenerInfo.getMotd(), MineiaGo.PROTOCOL,
+                MineiaGo.VERSION, ProxyServer.getInstance().getOnlineCount(), listenerInfo.getMaxPlayers(),
                 new Random().nextLong(), ProxyServer.getInstance().getName(), "Survival");
 
-        server = new RakNetServer(BedrockProxy.PORT, limit);
+        server = new RakNetServer(MineiaGo.PORT, limit);
         server.setIdentifier(id);
         server.addListener(this);
 
         server.startThreaded();
-        BedrockProxy.getInstance().getLogger().info("Listening for Bedrock clients on 0.0.0.0:" + BedrockProxy.PORT);
+        MineiaGo.getInstance().getLogger().info("Listening for Bedrock clients on 0.0.0.0:" + MineiaGo.PORT);
     }
 
     public static void sendPacket(RakNetClientSession session, DataPacket packet) {
@@ -50,12 +50,12 @@ public class NetworkManager implements RakNetServerListener {
 
     public static void sendPacket(BedrockPlayer player, DataPacket packet) {
         sendPacket(player.getSession(), packet);
-        BedrockProxy.getInstance().getLogger().info("[PROTOCOL Send] " + NetworkType.getById(packet.getId()) + " -> " + player.getSession().getAddress());
+        MineiaGo.getInstance().getLogger().info("[PROTOCOL Send] " + NetworkType.getById(packet.getId()) + " -> " + player.getSession().getAddress());
     }
 
     @Override
     public void onClientConnect(RakNetClientSession session) {
-        BedrockProxy.getInstance().getLogger()
+        MineiaGo.getInstance().getLogger()
                 .info(String.format("[%s] <-> Client has connected", session.getAddress()));
         
     }
@@ -63,13 +63,13 @@ public class NetworkManager implements RakNetServerListener {
     @Override
     public void onClientDisconnect(RakNetClientSession session, String reason) {
         BedrockPlayer.getPlayers().remove(session.getGloballyUniqueId());
-        BedrockProxy.getInstance().getLogger()
+        MineiaGo.getInstance().getLogger()
                 .info(String.format("[%s] <-> Client has disconnected: %s", session.getAddress(), reason));
     }
 
     @Override
     public void handleMessage(RakNetClientSession session, RakNetPacket packet, int channel) {
-        BedrockProxy.getInstance().getLogger().info("[PROTOCOL Recv] " + session.getAddress() + " -> " + NetworkType.getById(packet.getId()));
+        MineiaGo.getInstance().getLogger().info("[PROTOCOL Recv] " + session.getAddress() + " -> " + NetworkType.getById(packet.getId()));
         PacketRegistry.handlePacket(packet, BedrockPlayer.getPlayer(session));
     }
 }

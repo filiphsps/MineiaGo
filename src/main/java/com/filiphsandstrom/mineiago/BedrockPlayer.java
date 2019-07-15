@@ -1,7 +1,7 @@
-package com.filiphsandstrom.bedrockproxy;
+package com.filiphsandstrom.mineiago;
 
 import lombok.Data;
-import com.filiphsandstrom.bedrockproxy.packets.DisconnectPacket;
+import com.filiphsandstrom.mineiago.packets.DisconnectPacket;
 import com.whirvis.jraknet.session.RakNetClientSession;
 
 import java.util.HashMap;
@@ -91,11 +91,11 @@ class BedrockPlayer {
             packet.setMessage(reason);
             NetworkManager.sendPacket(getSession(), packet);
 
-            BedrockProxy.getInstance().getNetworkManager().getServer().removeSession(getSession(), reason);
+            MineiaGo.getInstance().getNetworkManager().getServer().removeSession(getSession(), reason);
         } else {
             packet.setHideDisconnectionScreen(true);
             NetworkManager.sendPacket(getSession(), packet);
-            BedrockProxy.getInstance().getNetworkManager().getServer().removeSession(getSession());
+            MineiaGo.getInstance().getNetworkManager().getServer().removeSession(getSession());
         }
     }
 }

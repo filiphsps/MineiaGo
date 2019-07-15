@@ -1,4 +1,4 @@
-package com.filiphsandstrom.bedrockproxy;
+package com.filiphsandstrom.mineiago;
 
 import javax.crypto.KeyAgreement;
 import java.security.*;

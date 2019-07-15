@@ -4,13 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.filiphsandstrom</groupId>
-    <artifactId>BedrockProxy</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>MineiaGo</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>BedrockProxy</name>
+    <name>MineiaGo</name>
 
-    <description>Allow Bedrock players on your BungeeCord server!</description>
+    <description>Minecraft Bedrock Edition to Java Edition using BungeeCord.</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -40,7 +40,7 @@
                 </executions>
                 <configuration>
                     <shadedArtifactAttached>true</shadedArtifactAttached>
-                    <shadedClassifierName>shaded</shadedClassifierName>
+                    <shadedClassifierName>complete</shadedClassifierName>
                 </configuration>
             </plugin>
             <plugin>

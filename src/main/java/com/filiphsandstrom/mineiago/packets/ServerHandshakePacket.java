@@ -1,10 +1,10 @@
-package com.filiphsandstrom.bedrockproxy.packets;
+package com.filiphsandstrom.mineiago.packets;
 
 import lombok.Getter;
 import lombok.Setter;
-import com.filiphsandstrom.bedrockproxy.BedrockPlayer;
-import com.filiphsandstrom.bedrockproxy.PacketRegistry;
-import com.filiphsandstrom.bedrockproxy.Security;
+import com.filiphsandstrom.mineiago.BedrockPlayer;
+import com.filiphsandstrom.mineiago.PacketRegistry;
+import com.filiphsandstrom.mineiago.Security;
 
 import java.security.*;
 import java.security.spec.ECGenParameterSpec;

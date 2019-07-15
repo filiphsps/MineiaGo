@@ -1,6 +1,6 @@
-package com.filiphsandstrom.bedrockproxy;
+package com.filiphsandstrom.mineiago;
 
-import com.filiphsandstrom.bedrockproxy.packets.*;
+import com.filiphsandstrom.mineiago.packets.*;
 import com.whirvis.jraknet.RakNetPacket;
 
 public class PacketRegistry {
@@ -17,7 +17,7 @@ public class PacketRegistry {
                 inst.setPlayer(player);
                 inst.handle();
             } else {
-                BedrockProxy.getInstance().getLogger().warning(
+                MineiaGo.getInstance().getLogger().warning(
                         String.format("Unknown packet 0x%s from %s",
                                 Integer.toHexString(packet.getId()).toUpperCase(),
                                 player.getSession().getAddress())
