@@ -53,9 +53,6 @@ public class LoginPacket extends DataPacket {
         }
         player.setLoggedIn(true);
 
-        //sendPacket seems to be broken
-        //NetworkManager.sendPacket(player, new DisconnectPacket());
-
         NetworkManager.sendPacket(player, new PlayStatusPacket(PlayStatusPacket.Status.LOGIN_SUCCESS));
         NetworkManager.sendPacket(player, new ServerHandshakePacket(getPlayer()));
 
