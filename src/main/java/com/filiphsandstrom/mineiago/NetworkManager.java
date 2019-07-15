@@ -2,6 +2,14 @@ package com.filiphsandstrom.mineiago;
 
 import com.filiphsandstrom.mineiago.PacketRegistry;
 import com.nukkitx.protocol.bedrock.*;
+import com.nukkitx.protocol.bedrock.packet.AdventureSettingsPacket;
+import com.nukkitx.protocol.bedrock.packet.DisconnectPacket;
+import com.nukkitx.protocol.bedrock.packet.PlayStatusPacket;
+import com.nukkitx.protocol.bedrock.packet.ResourcePacksInfoPacket;
+import com.nukkitx.protocol.bedrock.packet.SetTimePacket;
+import com.nukkitx.protocol.bedrock.packet.StartGamePacket;
+import com.nukkitx.protocol.bedrock.packet.PlayStatusPacket.Status;
+import com.nukkitx.protocol.bedrock.v361.Bedrock_v361;
 
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ListenerInfo;
@@ -12,6 +20,12 @@ public class NetworkManager {
     private BedrockServer server;
     public BedrockServer getServer() {
         return server;
+    }
+
+    // TODO: array
+    private BedrockServerSession session;
+    public BedrockServerSession getSession() {
+        return session;
     }
 
     public NetworkManager() {
@@ -28,9 +42,10 @@ public class NetworkManager {
         pong.setGameType("Survival");
         pong.setProtocolVersion(MineiaGo.PROTOCOL);
 
-        server.setHandler(new BedrockServerEventHandler() {
+        BedrockServerEventHandler eventHandler = new BedrockServerEventHandler() {
             @Override
             public boolean onConnectionRequest(InetSocketAddress address) {
+                MineiaGo.getInstance().getLogger().info("Connection from " + address.toString());
                 return true;
             }
             
@@ -41,12 +56,20 @@ public class NetworkManager {
             
             @Override
             public void onSessionCreation(BedrockServerSession serverSession) {
+                session = serverSession;
+                MineiaGo.getInstance().getLogger().info("Session from " + serverSession.getAddress());
+
+                serverSession.setLogging(true);
+                serverSession.setPacketCodec(Bedrock_v361.V361_CODEC);
+
                 // serverSession.addDisconnectHandler(() -> System.out.println("Disconnected"));
                 serverSession.setPacketHandler(PacketRegistry.handler);
             }
-        });
-
+        };
+        
+        server.setHandler(eventHandler);
         server.bind().join();
+
         MineiaGo.getInstance().getLogger().info("Listening for Bedrock clients on 0.0.0.0:" + MineiaGo.PORT);
     }
 }

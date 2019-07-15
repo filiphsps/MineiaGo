@@ -1,11 +1,9 @@
 package com.filiphsandstrom.mineiago;
 
-import com.nukkitx.protocol.bedrock.v361.Bedrock_v361;
-
 import net.md_5.bungee.api.plugin.Plugin;
 
 public final class MineiaGo extends Plugin {
-    public static final int PROTOCOL = Bedrock_v361.V361_CODEC.getProtocolVersion();
+    public static final int PROTOCOL = 361;
     public static final int PORT = 19132;
 
     private static MineiaGo instance;
