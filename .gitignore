@@ -19,3 +19,6 @@ buildNumber.properties
 .idea/
 *.iml
 out/
+
+# Vscode
+.vscode
