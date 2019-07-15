@@ -51,15 +51,19 @@ public class LoginPacket extends DataPacket {
                             player.getSession().getAddress(), player.getProtocolVersion()));
             return; // Do not attempt to decode for non-accepted protocols
         }
-        //skip(3);
-
-
-        BedrockProxy.getInstance().getLogger().info(String.format("[%s] <-> Logged in!", "player"));
-
         player.setLoggedIn(true);
+
+        //sendPacket seems to be broken
+        //NetworkManager.sendPacket(player, new DisconnectPacket());
 
         NetworkManager.sendPacket(player, new PlayStatusPacket(PlayStatusPacket.Status.LOGIN_SUCCESS));
         NetworkManager.sendPacket(player, new ServerHandshakePacket(getPlayer()));
+
         NetworkManager.sendPacket(player, new StartGamePacket());
+
+        NetworkManager.sendPacket(player, new SetTimePacket());
+        NetworkManager.sendPacket(player, new AdventureSettingsPacket());
+
+        NetworkManager.sendPacket(player, new PlayStatusPacket(PlayStatusPacket.Status.PLAYER_SPAWN));
     }
 }

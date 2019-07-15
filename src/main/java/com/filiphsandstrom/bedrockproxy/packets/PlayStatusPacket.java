@@ -33,7 +33,8 @@ public class PlayStatusPacket extends DataPacket {
         PLAYER_SPAWN(3),
         LOGIN_FAILED_INVALID_TENANT(4),
         LOGIN_FAILED_VANILLA_EDU(5),
-        LOGIN_FAILED_EDU_VANILLA(6);
+        LOGIN_FAILED_EDU_VANILLA(6),
+        LOGIN_FAILED_SERVER_FULL(7);
 
         private final int id;
         public final int getId() {

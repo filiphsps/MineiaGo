@@ -1,6 +1,7 @@
 package com.filiphsandstrom.bedrockproxy;
 
 import com.filiphsandstrom.bedrockproxy.packets.DataPacket;
+import com.filiphsandstrom.bedrockproxy.PacketRegistry.NetworkType;
 import com.whirvis.jraknet.RakNetPacket;
 import com.whirvis.jraknet.identifier.MinecraftIdentifier;
 import com.whirvis.jraknet.protocol.Reliability;
@@ -49,7 +50,7 @@ public class NetworkManager implements RakNetServerListener {
 
     public static void sendPacket(BedrockPlayer player, DataPacket packet) {
         sendPacket(player.getSession(), packet);
-        BedrockProxy.getInstance().getLogger().info("[" + player.getSession().getAddress() + "] Wrote 0x" + Integer.toHexString(packet.getId()).toUpperCase());
+        BedrockProxy.getInstance().getLogger().info("[PROTOCOL Send] " + NetworkType.getById(packet.getId()) + " -> " + player.getSession().getAddress());
     }
 
     @Override
@@ -67,8 +68,8 @@ public class NetworkManager implements RakNetServerListener {
     }
 
     @Override
-    public void handleMessage(RakNetClientSession session, RakNetPacket pk, int channel) {
-        BedrockProxy.getInstance().getLogger().info("packet id: " + pk.getId());
-        PacketRegistry.handlePacket(pk, BedrockPlayer.getPlayer(session));
+    public void handleMessage(RakNetClientSession session, RakNetPacket packet, int channel) {
+        BedrockProxy.getInstance().getLogger().info("[PROTOCOL Recv] " + session.getAddress() + " -> " + NetworkType.getById(packet.getId()));
+        PacketRegistry.handlePacket(packet, BedrockPlayer.getPlayer(session));
     }
 }

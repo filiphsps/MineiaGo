@@ -12,7 +12,7 @@ public class DisconnectPacket extends DataPacket {
         hideDisconnectionScreen = h;
     }
 
-    private String message;
+    private String message = "Disconnected!";
     public String getMessage() {
         return message;
     }

@@ -37,8 +37,15 @@ public class PacketRegistry {
         CLIENT_TO_SERVER_HANDSHAKE_PACKET(0x04),
         DISCONNECT_PACKET(0x05, DisconnectPacket.class),
 
+        TEXT_PACKET(0x09),
+        SET_TIME_PACKET(0x0b, SetTimePacket.class),
         START_GAME_PACKET(0x0b, StartGamePacket.class),
         ADD_PLAYER_PACKET(0x0c),
+
+        ADVENTURE_SETTINGS_PACKET(0x37, AdventureSettingsPacket.class),
+
+        RESOURCE_PACK_DATA_INFO_PACKET(0x52, ResourcePackDataInfoPacket.class),
+        RESOURCE_PACK_CHUNK_REQUEST_PACKET(0x54, ResourcePackChunkRequestPacket.class),
         
         BATCH_PACKET(0xFE, BatchPacket.class);
 
