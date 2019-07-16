@@ -2,6 +2,9 @@ package com.filiphsandstrom.mineiago;
 
 import java.io.File;
 import java.nio.file.*;
+
+import lombok.Getter;
+
 import java.io.InputStream;
 
 import net.md_5.bungee.config.Configuration;
@@ -9,7 +12,17 @@ import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 
 public class Config {
+    @Getter
+    private int port;
+
+    @Getter
+    public String submotd;
+
     private Configuration config;
+    public Configuration getConfig () {
+        return config;
+    }
+    
     private File configFile;
 
     public Config () {
@@ -37,6 +50,6 @@ public class Config {
     }
 
     public void Setup () {
-        MineiaGo.getInstance().setPort(config.getInt("port"));
+        port = config.getInt("port");
     }
 }

@@ -6,50 +6,60 @@ import com.github.steveice10.mc.protocol.MinecraftProtocol;
 import com.github.steveice10.packetlib.Client;
 import com.github.steveice10.packetlib.Session;
 import com.github.steveice10.packetlib.tcp.TcpSessionFactory;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.nukkitx.protocol.bedrock.BedrockServerSession;
+
+import lombok.Getter;
+import lombok.Setter;
+import net.md_5.bungee.api.ServerPing.PlayerInfo;
 
 public class BedrockPlayer {
     public BedrockPlayer() {
         super();
     }
+
     public BedrockPlayer(BedrockServerSession bedrock_session) {
         super();
-        
+
         setBedrockSession(bedrock_session);
 
         // TODO: offline mode, direct connect to child server if enabled.
     }
-    
+
+    public void setChainData(String chain) {
+        // FIXME
+        MineiaGo.getInstance().getLogger().warning("chainData validation is not implemented!");
+        return;
+
+        JsonObject data = new JsonParser().parse(chain).getAsJsonObject().get("extraData").getAsJsonObject();
+        if(!data.isJsonObject())
+            return;
+
+        player = new PlayerInfo(data.get("displayName").getAsString(), data.get("identity").getAsString());
+
+        MineiaGo.getInstance().getLogger().warning("Player:" + player.getName());
+    }
+
+    @Getter
+    private PlayerInfo player;
+
+    @Getter
+    @Setter
     private BedrockServerSession bedrock_session;
-    public BedrockServerSession getBedrockSession() {
-        return bedrock_session;
-    }
-    public void setBedrockSession(BedrockServerSession session) {
-        bedrock_session = session;
-    }
 
+    @Getter
+    @Setter
     private Session java_session;
-    public Session getJavaSession() {
-        return java_session;
-    }
-    public void setJavaSession(Session session) {
-        java_session = session;
-    }
 
+    @Getter
+    @Setter
     private String username = "";
-    public String getUsername() {
-        return username;
-    }
-    public void setUsername(String name) {
-        username = name;
-    }
+
+    @Getter
+    @Setter
     private String password = "";
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String pass) {
-        password = pass;
-    }
 
     // FIXME: only run once we've gotten auth details from client
     public void createJavaClient() {

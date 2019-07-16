@@ -3,36 +3,19 @@ package com.filiphsandstrom.mineiago;
 import net.md_5.bungee.api.plugin.Plugin;
 import org.bstats.bungeecord.*;
 
+import lombok.Getter;
+
 public final class MineiaGo extends Plugin {
     public static final int PROTOCOL = 361;
 
-    public int port;
-    public int getPort() {
-        return port;
-    }
-    public void setPort(int p) {
-        port = p;
-    }
-
+    @Getter
     private static MineiaGo instance;
-    public static MineiaGo getInstance() {
-        return instance;
-    }
-
+    @Getter
     private MetricsLite metrics;
-    public MetricsLite getMetrics() {
-        return metrics;
-    }
-
+    @Getter
     private NetworkManager networkManager;
-    public NetworkManager getNetworkManager() {
-        return networkManager;
-    }
-
+    @Getter
     private Config config;
-    public Config getConfig() {
-        return config;
-    }
 
     @Override
     public void onEnable() {

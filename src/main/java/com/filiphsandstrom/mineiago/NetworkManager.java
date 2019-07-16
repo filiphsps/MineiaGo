@@ -13,22 +13,22 @@ import net.md_5.bungee.api.config.ListenerInfo;
 import java.net.InetSocketAddress;
 import java.util.Collection;
 
-public class NetworkManager {
-    private BedrockServer server;
+import lombok.Getter;
 
-    public BedrockServer getServer() {
-        return server;
-    }
+public class NetworkManager {
+    @Getter
+    private BedrockServer server;
 
     public NetworkManager() {
         final ListenerInfo listenerInfo = ProxyServer.getInstance().getConfig().getListeners().stream().findFirst()
                 .orElseGet(null);
 
-        server = new BedrockServer(new InetSocketAddress("0.0.0.0", MineiaGo.getInstance().getPort()));
+        server = new BedrockServer(new InetSocketAddress("0.0.0.0", MineiaGo.getInstance().getConfig().getPort()));
         
         BedrockPong pong = new BedrockPong();
         pong.setEdition("MCPE");
         pong.setMotd(listenerInfo.getMotd());
+        pong.setSubMotd(MineiaGo.getInstance().getConfig().getSubmotd());
         pong.setPlayerCount(ProxyServer.getInstance().getOnlineCount());
         pong.setMaximumPlayerCount(listenerInfo.getMaxPlayers());
         pong.setGameType("Survival");
@@ -76,7 +76,7 @@ public class NetworkManager {
         server.setHandler(eventHandler);
         server.bind().join();
 
-        MineiaGo.getInstance().getLogger().info("Listening for Bedrock clients on 0.0.0.0:" + MineiaGo.getInstance().getPort());
+        MineiaGo.getInstance().getLogger().info("Listening for Bedrock clients on 0.0.0.0:" + MineiaGo.getInstance().getConfig().getPort());
     }
 
     public void Stop () {

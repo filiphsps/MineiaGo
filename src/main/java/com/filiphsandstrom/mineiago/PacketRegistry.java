@@ -1,9 +1,8 @@
 package com.filiphsandstrom.mineiago;
 
-import java.io.*;
 import java.util.*;
 
-import com.filiphsandstrom.mineiago.world.*;
+import com.filiphsandstrom.mineiago.world.BedrockChunk;
 import com.flowpowered.math.vector.Vector2f;
 import com.flowpowered.math.vector.Vector3f;
 import com.flowpowered.math.vector.Vector3i;
@@ -25,8 +24,11 @@ public class PacketRegistry {
         public boolean handle(LoginPacket packet) {
             MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->LoginPacket");
 
+            MineiaGo.getInstance().getLogger().info(packet.getChainData().toString());
+
             // TODO: handle chainData
             MineiaGo.getInstance().getLogger().info(packet.toString());
+            player.setChainData(packet.getChainData().toString());
 
             PlayStatusPacket status = new PlayStatusPacket();
             status.handle(handler);
@@ -162,7 +164,7 @@ public class PacketRegistry {
 
             ChunkRadiusUpdatedPacket chunks = new ChunkRadiusUpdatedPacket();
             chunks.handle(handler);
-            chunks.setRadius(22);
+            chunks.setRadius(packet.getRadius());
             player.getBedrockSession().sendPacket(chunks);
 
             if(!player.isAuthenticated()) {
