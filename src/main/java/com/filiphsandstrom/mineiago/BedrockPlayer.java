@@ -47,11 +47,11 @@ public class BedrockPlayer {
 
     @Getter
     @Setter
-    private BedrockServerSession bedrock_session;
+    private BedrockServerSession bedrockSession;
 
     @Getter
     @Setter
-    private Session java_session;
+    private Session javaSession;
 
     @Getter
     @Setter
