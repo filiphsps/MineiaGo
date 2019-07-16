@@ -56,7 +56,7 @@ public class NetworkManager {
                 serverSession.setPacketCodec(Bedrock_v361.V361_CODEC);
 
                 // FIXME: remove session on disconnect
-                // serverSession.addDisconnectHandler(() -> player.onDisconnect());
+                //serverSession.addDisconnectHandler((reason) -> player.onDisconnect(reason));
 
                 PacketRegistry packets = new PacketRegistry();
                 packets.player = player;

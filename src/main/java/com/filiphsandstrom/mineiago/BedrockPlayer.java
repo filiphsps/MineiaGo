@@ -28,6 +28,11 @@ public class BedrockPlayer {
         // TODO: offline mode, direct connect to child server if enabled.
     }
 
+    public void onDisconnect(String reason) {
+        // FIXME
+        return;
+    }
+
     public void setChainData(String chain) {
         // FIXME
         MineiaGo.getInstance().getLogger().warning("chainData validation is not implemented!");
