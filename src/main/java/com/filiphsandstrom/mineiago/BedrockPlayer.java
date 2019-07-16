@@ -33,13 +33,13 @@ public class BedrockPlayer {
         MineiaGo.getInstance().getLogger().warning("chainData validation is not implemented!");
         return;
 
-        JsonObject data = new JsonParser().parse(chain).getAsJsonObject().get("extraData").getAsJsonObject();
+        /* JsonObject data = new JsonParser().parse(chain).getAsJsonObject().get("extraData").getAsJsonObject();
         if(!data.isJsonObject())
             return;
 
         player = new PlayerInfo(data.get("displayName").getAsString(), data.get("identity").getAsString());
 
-        MineiaGo.getInstance().getLogger().warning("Player:" + player.getName());
+        MineiaGo.getInstance().getLogger().warning("Player:" + player.getName()); */
     }
 
     @Getter
@@ -61,8 +61,13 @@ public class BedrockPlayer {
     @Setter
     private String password = "";
 
-    // FIXME: only run once we've gotten auth details from client
-    public void createJavaClient() {
+    // FIXME: run once we've gotten auth details from client
+    public void createJavaClient() throws Exception {
+        if(username.isEmpty())
+            throw new Exception("Username is empty");
+        else if(password.isEmpty())
+            throw new Exception("Password is empty");
+
         try {
             MinecraftProtocol protocol = new MinecraftProtocol(username, password);
             Client client = new Client("0.0.0.0", 25565, protocol, new TcpSessionFactory(Proxy.NO_PROXY));
