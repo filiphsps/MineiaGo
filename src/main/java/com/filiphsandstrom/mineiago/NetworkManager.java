@@ -55,8 +55,8 @@ public class NetworkManager {
                 serverSession.setLogging(true);
                 serverSession.setPacketCodec(Bedrock_v361.V361_CODEC);
 
-                //FIXME: remove session on disconnect
-                // serverSession.addDisconnectHandler(() -> System.out.println("Disconnected"));
+                // FIXME: remove session on disconnect
+                // serverSession.addDisconnectHandler(() -> player.onDisconnect());
 
                 PacketRegistry packets = new PacketRegistry();
                 packets.player = player;
@@ -77,5 +77,10 @@ public class NetworkManager {
         server.bind().join();
 
         MineiaGo.getInstance().getLogger().info("Listening for Bedrock clients on 0.0.0.0:" + MineiaGo.getInstance().getPort());
+    }
+
+    public void Stop () {
+        MineiaGo.getInstance().getLogger().info("Shutting down the Bedrock server");
+        server.close("MineiaGo is shutting down...");
     }
 }
