@@ -16,7 +16,7 @@ public class BedrockChunk {
 
     public void setRandom() throws FileNotFoundException {
         try {
-            byte[] chunk = {};
+            byte[] chunk = {0};
             data = chunk;
         } catch (Exception e) {
             e.printStackTrace();

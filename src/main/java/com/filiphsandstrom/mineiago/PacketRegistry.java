@@ -24,9 +24,6 @@ public class PacketRegistry {
         public boolean handle(LoginPacket packet) {
             MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->LoginPacket");
 
-            MineiaGo.getInstance().getLogger().info(packet.getChainData().toString());
-
-            // TODO: handle chainData
             MineiaGo.getInstance().getLogger().info(packet.toString());
             player.setChainData(packet.getChainData().toString());
 
@@ -35,21 +32,15 @@ public class PacketRegistry {
             status.setStatus(Status.LOGIN_SUCCESS);
             player.getBedrockSession().sendPacket(status);
 
-            /*
-             * MovePlayerPacket move = new MovePlayerPacket(); move.handle(handler);
-             * move.setPosition(new Vector3f(0, 75, 0));
-             * player.getBedrockSession().sendPacket(move);
-             */
-
             StartGamePacket game = new StartGamePacket();
             game.handle(handler);
-            game.setUniqueEntityId(-1);
-            game.setRuntimeEntityId(-1);
+            game.setUniqueEntityId(1);
+            game.setRuntimeEntityId(1);
             game.setPlayerGamemode(1);
             game.setPlayerPosition(new Vector3f(0, 75, 0));
             game.setRotation(new Vector2f(0, 0));
             game.setDefaultSpawn(new Vector3i(0, 75, 0));
-            game.setMultiplayerGame(false);
+            game.setMultiplayerGame(true);
             game.setXblBroadcastMode(GamePublishSetting.PUBLIC);
             game.setPlatformBroadcastMode(GamePublishSetting.PUBLIC);
             game.setLevelId("MinieaGo");
@@ -58,23 +49,6 @@ public class PacketRegistry {
             game.setMultiplayerCorrelationId("MineiaGo");
             game.setGeneratorId(2);
             player.getBedrockSession().sendPacket(game);
-
-            SetSpawnPositionPacket spawn = new SetSpawnPositionPacket();
-            spawn.handle(handler);
-            spawn.setBlockPosition(new Vector3i(0, 75, 0));
-            spawn.setSpawnForced(true);
-            spawn.setSpawnType(Type.WORLD_SPAWN);
-            player.getBedrockSession().sendPacket(spawn);
-
-            SetTimePacket time = new SetTimePacket();
-            time.handle(handler);
-            time.setTime(0);
-            player.getBedrockSession().sendPacket(time);
-
-            RespawnPacket respawn = new RespawnPacket();
-            respawn.handle(handler);
-            respawn.setPosition(new Vector3f(0, 75, 0));
-            player.getBedrockSession().sendPacket(respawn);
             return true;
         }
 
@@ -100,14 +74,35 @@ public class PacketRegistry {
         public boolean handle(StartGamePacket packet) {
             MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->StartGamePacket");
 
+            SetSpawnPositionPacket spawn = new SetSpawnPositionPacket();
+            spawn.handle(handler);
+            spawn.setBlockPosition(new Vector3i(0, 75, 0));
+            spawn.setSpawnForced(true);
+            spawn.setSpawnType(Type.WORLD_SPAWN);
+            player.getBedrockSession().sendPacket(spawn);
+
+            MovePlayerPacket move = new MovePlayerPacket();
+            move.handle(handler);
+            move.setPosition(new Vector3f(0, 75, 0));
+            move.setOnGround(true);
+            move.setRotation(new Vector3f(0, 0, 0));
+            player.getBedrockSession().sendPacket(move);
+
+            SetTimePacket time = new SetTimePacket();
+            time.handle(handler);
+            time.setTime(0);
+            player.getBedrockSession().sendPacket(time);
+
+            RespawnPacket respawn = new RespawnPacket();
+            respawn.handle(handler);
+            respawn.setPosition(new Vector3f(0, 75, 0));
+            player.getBedrockSession().sendPacket(respawn);
+
             ResourcePacksInfoPacket resource_info = new ResourcePacksInfoPacket();
+            resource_info.handle(handler);
             resource_info.setForcedToAccept(false);
             resource_info.setScriptingEnabled(false);
             player.getBedrockSession().sendPacket(resource_info);
-
-            ResourcePackClientResponsePacket resource = new ResourcePackClientResponsePacket();
-            resource.setStatus(com.nukkitx.protocol.bedrock.packet.ResourcePackClientResponsePacket.Status.SEND_PACKS);
-            player.getBedrockSession().sendPacket(resource);
             return true;
         }
 
@@ -121,7 +116,7 @@ public class PacketRegistry {
         @Override
         public boolean handle(ServerSettingsResponsePacket packet) {
             MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->ServerSettingsResponsePacket");
-            return true;
+            return false;
         }
 
         @Override
@@ -138,11 +133,7 @@ public class PacketRegistry {
 
         @Override
         public boolean handle(MovePlayerPacket packet) {
-            // MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->MovePlayerPacket");
-            /* MovePlayerPacket move = new MovePlayerPacket();
-            move.setPosition(new Vector3f(0.0, 75.0, 0.0));
-            move.setOnGround(true);
-            player.getBedrockSession().sendPacket(move); */
+            MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->MovePlayerPacket");
             return true;
         }
 
@@ -164,10 +155,10 @@ public class PacketRegistry {
 
             ChunkRadiusUpdatedPacket chunks = new ChunkRadiusUpdatedPacket();
             chunks.handle(handler);
-            chunks.setRadius(packet.getRadius());
+            chunks.setRadius(1);
             player.getBedrockSession().sendPacket(chunks);
 
-            if(!player.isAuthenticated()) {
+            if (!player.isAuthenticated()) {
                 BedrockChunk Chunk = new BedrockChunk();
                 try {
                     Chunk.setRandom();
@@ -181,7 +172,6 @@ public class PacketRegistry {
                         LevelChunkPacket chunk = new LevelChunkPacket();
                         chunk.handle(handler);
                         chunk.setData(Chunk.getRaw());
-
                         chunk.setChunkX(x);
                         chunk.setChunkZ(y);
                         chunk.setSubChunksLength(0);
@@ -190,11 +180,6 @@ public class PacketRegistry {
                     }
                 }
                 player.getBedrockSession().sendWrapped(chunk_packets, false);
-
-                PlayStatusPacket status = new PlayStatusPacket();
-                status.handle(handler);
-                status.setStatus(Status.PLAYER_SPAWN);
-                player.getBedrockSession().sendPacket(status);
             }
             return true;
         }
@@ -207,7 +192,7 @@ public class PacketRegistry {
 
         @Override
         public boolean handle(LevelChunkPacket packet) {
-            // MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->LevelChunkPacket");
+            MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->LevelChunkPacket");
             return true;
         }
 
@@ -219,13 +204,14 @@ public class PacketRegistry {
 
         @Override
         public boolean handle(MapInfoRequestPacket packet) {
-            MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->MapInfoRequestPacket " + packet.toString());
-            
-            if(!player.isAuthenticated()) {
+            MineiaGo.getInstance().getLogger().info("BedrockPacketHandler->MapInfoRequestPacket");
+
+            if (!player.isAuthenticated()) {
                 ServerSettingsResponsePacket form = new ServerSettingsResponsePacket();
                 form.handle(handler);
                 form.setFormId(1);
-                form.setFormData("{\"type\":\"custom_form\", \"title\":\"Login to your mojang account!\", \"content\": [{\"type\":\"input\", \"text\":\"Email\", \"placeholder\":\"steve@mojang.com\", \"default\":\"\"}, {\"type\":\"input\", \"text\":\"Password\", \"placeholder\":\"password\", \"default\":\"\"}]}");
+                form.setFormData(
+                        "{\"type\":\"custom_form\", \"title\":\"Login to your mojang account!\", \"content\": [{\"type\":\"input\", \"text\":\"Email\", \"placeholder\":\"steve@mojang.com\", \"default\":\"\"}, {\"type\":\"input\", \"text\":\"Password\", \"placeholder\":\"password\", \"default\":\"\"}]}");
                 player.getBedrockSession().sendPacket(form);
             }
             return true;
@@ -254,12 +240,15 @@ public class PacketRegistry {
             MineiaGo.getInstance().getLogger()
                     .info("BedrockPacketHandler->ResourcePackClientResponsePacket " + packet.toString());
 
-            if (packet.getStatus() == ResourcePackClientResponsePacket.Status.HAVE_ALL_PACKS) {
-                MapInfoRequestPacket map_info = new MapInfoRequestPacket();
-                map_info.handle(handler);
-                map_info.setUniqueMapId(0);
-                player.getBedrockSession().sendPacket(map_info);
-            }
+            /* MapInfoRequestPacket map_info = new MapInfoRequestPacket();
+            map_info.handle(handler);
+            map_info.setUniqueMapId(0);
+            player.getBedrockSession().sendPacket(map_info); */
+
+            PlayStatusPacket status = new PlayStatusPacket();
+            status.handle(handler);
+            status.setStatus(Status.PLAYER_SPAWN);
+            player.getBedrockSession().sendPacket(status);
             return true;
         }
     };
