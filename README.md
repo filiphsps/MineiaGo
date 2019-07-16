@@ -1,4 +1,4 @@
-# MineaGo [![Build Status](https://travis-ci.org/filfat/MineiaGo.svg?branch=master)](https://travis-ci.org/filfat/MineiaGo)
+# MineaGo [![Build Status](https://travis-ci.org/filfat/MineiaGo.svg?branch=master)](https://travis-ci.org/filfat/MineiaGo) [![Download snapshot](https://img.shields.io/badge/download-snapshot-blue.svg)](https://circleci.com/api/v1.1/project/github/filfat/MineiaGo/tree/master/latest/artifacts/MineiaGo.jar)
 
 MineaGo is a BungeeCord plugin that allows bedrock clients to connect to your server network. It is currently in extremely early development and should therefore not be used in production, especially not in any large scale form.
 

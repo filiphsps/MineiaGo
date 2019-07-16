@@ -33,5 +33,5 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
       - store_artifacts:
-          path: /target/MineiaGo.jar
-          destination: artifact-file
+          path: /home/circleci/repo/target/MineiaGo.jar
+          destination: MineiaGo.jar
