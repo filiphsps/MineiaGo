@@ -76,19 +76,30 @@ public class BedrockPlayer {
     @Setter
     private String password = "";
 
-    public void createJavaClient() throws Exception {
-        if (username.isEmpty())
-            throw new Exception("Username is empty");
-        else if (password.isEmpty())
-            throw new Exception("Password is empty");
-
+    public void createJavaClient() {
+        // FIXME this should probably be handled completely differently!
         try {
-            MinecraftProtocol protocol = new MinecraftProtocol(username, password);
-            Client client = new Client("0.0.0.0", 25565, protocol, new TcpSessionFactory(Proxy.NO_PROXY));
+            MinecraftProtocol protocol;
+            Client client;
+
+            try {
+                protocol = new MinecraftProtocol(username, password);
+                client = new Client("0.0.0.0", 25565, protocol, new TcpSessionFactory(Proxy.NO_PROXY));
+            } catch (Exception e) {
+                bedrockSession.disconnect(e.getMessage());
+                return;
+            }
 
             MineiaGo.getInstance().getLogging()
                     .Debug("[" + bedrockSession.getAddress() + "] Connecting to main server...");
-            client.getSession().connect();
+
+            try {
+                client.getSession().connect();
+            } catch (Exception e) {
+                bedrockSession.disconnect(e.getMessage());
+                return;
+            }
+
             client.getSession().addListener(new SessionListener() {
 
                 @Override
