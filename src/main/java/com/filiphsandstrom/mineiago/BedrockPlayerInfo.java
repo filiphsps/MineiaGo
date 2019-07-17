@@ -1,9 +1,25 @@
 package com.filiphsandstrom.mineiago;
 
-import net.md_5.bungee.api.ServerPing.PlayerInfo;
+import lombok.Getter;
+import lombok.Setter;
 
-public class BedrockPlayerInfo extends PlayerInfo  {
-    public BedrockPlayerInfo(String username, String uuid) {
-        super(username, uuid);
+public class BedrockPlayerInfo {
+    @Getter
+    @Setter
+    private String username;
+
+    @Getter
+    @Setter
+    private String uuid;
+
+    @Getter
+    @Setter
+    private String xuid;
+
+    public BedrockPlayerInfo() {}
+    public BedrockPlayerInfo(String username, String uuid, String xuid) {
+        this.username = username;
+        this.uuid = uuid;
+        this.xuid = xuid;
     }
 }

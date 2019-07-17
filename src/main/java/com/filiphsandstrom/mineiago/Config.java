@@ -39,6 +39,7 @@ public class Config {
         if (!configFile.exists()) {
             try (InputStream in = instance.getResourceAsStream("config.yml")) {
                 Files.copy(in, configFile.toPath());
+                in.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
