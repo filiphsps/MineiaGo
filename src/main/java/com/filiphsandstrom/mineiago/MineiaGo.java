@@ -13,6 +13,8 @@ public final class MineiaGo extends Plugin {
     @Getter
     private MetricsLite metrics;
     @Getter
+    private Logging logging;
+    @Getter
     private NetworkManager networkManager;
     @Getter
     private Config config;
@@ -22,6 +24,7 @@ public final class MineiaGo extends Plugin {
         instance = this;
 
         metrics = new MetricsLite(instance);
+        logging = new Logging();
         config = new Config();
         networkManager = new NetworkManager();
     }
@@ -30,5 +33,6 @@ public final class MineiaGo extends Plugin {
     public void onDisable() {
         networkManager.Stop();
         config.Save();
+        logging.Save();
     }
 }
