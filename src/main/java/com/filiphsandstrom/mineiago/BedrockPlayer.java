@@ -44,13 +44,11 @@ public class BedrockPlayer {
         if(!data.isJsonObject())
             return;
 
-        player = new PlayerInfo(data.get("displayName").getAsString(), data.get("identity").getAsString());
-
-        MineiaGo.getInstance().getLogger().warning("Player:" + player.getName()); */
+        playerInfo = new BedrockPlayerInfo(data.get("displayName").getAsString(), data.get("identity").getAsString()); */
     }
 
     @Getter
-    private PlayerInfo player;
+    private BedrockPlayerInfo playerInfo;
 
     @Getter
     @Setter
