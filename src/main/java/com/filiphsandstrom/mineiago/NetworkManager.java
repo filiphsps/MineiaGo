@@ -23,8 +23,9 @@ public class NetworkManager {
         final ListenerInfo listenerInfo = ProxyServer.getInstance().getConfig().getListeners().stream().findFirst()
                 .orElseGet(null);
 
-        server = new BedrockServer(new InetSocketAddress("0.0.0.0", MineiaGo.getInstance().getConfig().getPort()));
-        
+        server = new BedrockServer(new InetSocketAddress(MineiaGo.getInstance().getConfig().getAddress(),
+                MineiaGo.getInstance().getConfig().getPort()));
+
         BedrockPong pong = new BedrockPong();
         pong.setEdition("MCPE");
         pong.setMotd(listenerInfo.getMotd());
@@ -40,12 +41,12 @@ public class NetworkManager {
                 MineiaGo.getInstance().getLogger().info("Connection from " + address.toString());
                 return true;
             }
-            
+
             @Override
             public BedrockPong onQuery(InetSocketAddress address) {
                 return pong;
             }
-            
+
             @Override
             public void onSessionCreation(BedrockServerSession serverSession) {
                 MineiaGo.getInstance().getLogger().info("Session from " + serverSession.getAddress());
@@ -56,12 +57,12 @@ public class NetworkManager {
                 serverSession.setPacketCodec(Bedrock_v361.V361_CODEC);
 
                 // FIXME: remove session on disconnect
-                //serverSession.addDisconnectHandler((reason) -> player.onDisconnect(reason));
+                // serverSession.addDisconnectHandler((reason) -> player.onDisconnect(reason));
 
                 PacketRegistry packets = new PacketRegistry();
                 packets.player = player;
                 serverSession.setPacketHandler(packets.handler);
-                serverSession.setBatchedHandler(new BatchHandler(){
+                serverSession.setBatchedHandler(new BatchHandler() {
                     @Override
                     public void handle(BedrockSession session, ByteBuf compressed, Collection<BedrockPacket> packets) {
                         for (BedrockPacket packet : packets) {
@@ -72,14 +73,15 @@ public class NetworkManager {
                 });
             }
         };
-        
+
         server.setHandler(eventHandler);
         server.bind().join();
 
-        MineiaGo.getInstance().getLogger().info("Listening for Bedrock clients on 0.0.0.0:" + MineiaGo.getInstance().getConfig().getPort());
+        MineiaGo.getInstance().getLogger().info("Listening for Bedrock clients on "
+                + MineiaGo.getInstance().getConfig().getAddress() + ":" + MineiaGo.getInstance().getConfig().getPort());
     }
 
-    public void Stop () {
+    public void Stop() {
         MineiaGo.getInstance().getLogger().info("Shutting down the Bedrock server");
         server.close("MineiaGo is shutting down...");
     }

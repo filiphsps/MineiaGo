@@ -29,5 +29,6 @@ public final class MineiaGo extends Plugin {
     @Override
     public void onDisable() {
         networkManager.Stop();
+        config.Save();
     }
 }
