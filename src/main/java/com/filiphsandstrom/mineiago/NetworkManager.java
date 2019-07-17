@@ -38,7 +38,7 @@ public class NetworkManager {
         BedrockServerEventHandler eventHandler = new BedrockServerEventHandler() {
             @Override
             public boolean onConnectionRequest(InetSocketAddress address) {
-                MineiaGo.getInstance().getLogger().info("Connection from " + address.toString());
+                MineiaGo.getInstance().getLogging().Info("Connection from " + address.toString());
                 return true;
             }
 
@@ -49,7 +49,7 @@ public class NetworkManager {
 
             @Override
             public void onSessionCreation(BedrockServerSession serverSession) {
-                MineiaGo.getInstance().getLogger().info("Session from " + serverSession.getAddress());
+                MineiaGo.getInstance().getLogging().Info("Session from " + serverSession.getAddress());
 
                 BedrockPlayer player = new BedrockPlayer(serverSession);
 
