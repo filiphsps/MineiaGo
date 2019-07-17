@@ -33,6 +33,12 @@ public class PacketRegistry {
             status.setStatus(Status.LOGIN_SUCCESS);
             player.getBedrockSession().sendPacket(status);
 
+            ResourcePacksInfoPacket resource_info = new ResourcePacksInfoPacket();
+            resource_info.handle(handler);
+            resource_info.setForcedToAccept(false);
+            resource_info.setScriptingEnabled(false);
+            player.getBedrockSession().sendPacket(resource_info);
+
             StartGamePacket game = new StartGamePacket();
             game.handle(handler);
             game.setUniqueEntityId(1);
@@ -78,6 +84,11 @@ public class PacketRegistry {
         public boolean handle(StartGamePacket packet) {
             MineiaGo.getInstance().getLogging().Debug(packet.toString());
 
+            SetTimePacket time = new SetTimePacket();
+            time.handle(handler);
+            time.setTime(0);
+            player.getBedrockSession().sendPacket(time);
+
             SetSpawnPositionPacket spawn = new SetSpawnPositionPacket();
             spawn.handle(handler);
             spawn.setBlockPosition(new Vector3i(0, 5, 0));
@@ -94,21 +105,10 @@ public class PacketRegistry {
             move.setTeleportationCause(TeleportationCause.UNKNOWN);
             player.getBedrockSession().sendPacket(move);
 
-            SetTimePacket time = new SetTimePacket();
-            time.handle(handler);
-            time.setTime(0);
-            player.getBedrockSession().sendPacket(time);
-
             RespawnPacket respawn = new RespawnPacket();
             respawn.handle(handler);
             respawn.setPosition(new Vector3f(0, 5, 0));
             player.getBedrockSession().sendPacket(respawn);
-
-            ResourcePacksInfoPacket resource_info = new ResourcePacksInfoPacket();
-            resource_info.handle(handler);
-            resource_info.setForcedToAccept(false);
-            resource_info.setScriptingEnabled(false);
-            player.getBedrockSession().sendPacket(resource_info);
             return true;
         }
 
@@ -146,6 +146,9 @@ public class PacketRegistry {
 
         @Override
         public boolean handle(MovePlayerPacket packet) {
+            if (packet.getPosition().toString().isEmpty())
+                return true;
+
             MineiaGo.getInstance().getLogging().Debug(packet.toString());
 
             if (!player.isAuthenticated()) {
@@ -253,6 +256,12 @@ public class PacketRegistry {
             map_info.setUniqueMapId(0);
             player.getBedrockSession().sendPacket(map_info);
 
+            SetCommandsEnabledPacket commands_on = new SetCommandsEnabledPacket();
+            commands_on.handle(handler);
+            commands_on.setCommandsEnabled(true);
+            player.getBedrockSession().sendPacket(commands_on);
+
+            //TODO: only spawn after sending chunks
             PlayStatusPacket status = new PlayStatusPacket();
             status.handle(handler);
             status.setStatus(Status.PLAYER_SPAWN);
