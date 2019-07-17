@@ -35,7 +35,7 @@ public class BedrockPlayer {
 
     public void setChainData(String chain) {
         // FIXME
-        MineiaGo.getInstance().getLogger().warning("chainData validation is not implemented!");
+        MineiaGo.getInstance().getLogging().Warning("chainData validation is not implemented!");
         return;
 
         //JsonObject ecryption = new JsonParser().parse(chain).getAsString("chain");

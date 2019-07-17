@@ -10,6 +10,8 @@ import com.nukkitx.protocol.bedrock.BedrockPacket;
 import com.nukkitx.protocol.bedrock.data.GamePublishSetting;
 import com.nukkitx.protocol.bedrock.handler.BedrockPacketHandler;
 import com.nukkitx.protocol.bedrock.packet.*;
+import com.nukkitx.protocol.bedrock.packet.MovePlayerPacket.Mode;
+import com.nukkitx.protocol.bedrock.packet.MovePlayerPacket.TeleportationCause;
 import com.nukkitx.protocol.bedrock.packet.PlayStatusPacket.Status;
 import com.nukkitx.protocol.bedrock.packet.SetSpawnPositionPacket.Type;
 
@@ -42,10 +44,10 @@ public class PacketRegistry {
             game.setMultiplayerGame(true);
             game.setXblBroadcastMode(GamePublishSetting.PUBLIC);
             game.setPlatformBroadcastMode(GamePublishSetting.PUBLIC);
-            game.setLevelId("MinieaGo");
-            game.setWorldName("MinieaGo");
+            game.setLevelId(MineiaGo.getInstance().getConfig().getServername());
+            game.setWorldName(MineiaGo.getInstance().getConfig().getServername());
             game.setPremiumWorldTemplateId("");
-            game.setMultiplayerCorrelationId("MineiaGo");
+            game.setMultiplayerCorrelationId("");
             game.setGeneratorId(2);
             player.getBedrockSession().sendPacket(game);
             return true;
@@ -76,8 +78,8 @@ public class PacketRegistry {
             SetSpawnPositionPacket spawn = new SetSpawnPositionPacket();
             spawn.handle(handler);
             spawn.setBlockPosition(new Vector3i(0, 75, 0));
-            spawn.setSpawnForced(true);
-            spawn.setSpawnType(Type.WORLD_SPAWN);
+            spawn.setSpawnForced(false);
+            spawn.setSpawnType(Type.PLAYER_SPAWN);
             player.getBedrockSession().sendPacket(spawn);
 
             MovePlayerPacket move = new MovePlayerPacket();
@@ -85,6 +87,8 @@ public class PacketRegistry {
             move.setPosition(new Vector3f(0, 75, 0));
             move.setOnGround(true);
             move.setRotation(new Vector3f(0, 0, 0));
+            move.setMode(Mode.NORMAL);
+            move.setTeleportationCause(TeleportationCause.UNKNOWN);
             player.getBedrockSession().sendPacket(move);
 
             SetTimePacket time = new SetTimePacket();
@@ -158,11 +162,7 @@ public class PacketRegistry {
 
             if (!player.isAuthenticated()) {
                 BedrockChunk Chunk = new BedrockChunk();
-                try {
-                    Chunk.setRandom();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                Chunk.setFlat();
 
                 Collection<BedrockPacket> chunk_packets = new ArrayList<BedrockPacket>();
                 for (int x = -1; x <= 1; x++) {
@@ -209,7 +209,7 @@ public class PacketRegistry {
                 form.handle(handler);
                 form.setFormId(1);
                 form.setFormData(
-                        "{\"type\":\"custom_form\", \"title\":\"Login to your mojang account!\", \"content\": [{\"type\":\"input\", \"text\":\"Email\", \"placeholder\":\"steve@mojang.com\", \"default\":\"\"}, {\"type\":\"input\", \"text\":\"Password\", \"placeholder\":\"password\", \"default\":\"\"}]}");
+                        "{\"type\":\"custom_form\", \"title\":\"Login to your Mojang account!\", \"content\": [{\"type\":\"input\", \"text\":\"Email\", \"placeholder\":\"steve@mojang.com\", \"default\":\"\"}, {\"type\":\"input\", \"text\":\"Password\", \"placeholder\":\"password\", \"default\":\"\"}]}");
                 player.getBedrockSession().sendPacket(form);
             }
             return true;
