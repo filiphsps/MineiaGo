@@ -17,12 +17,18 @@ Any help is appreciated, but especially with nbt & chunks.
 ### Running tests
 ```$ todo```
 
-## How it's intended to work
+### How it's intended to work
 ![Diagram](https://imgur.com/0NwkI8H.png)
 
-## Useful resources
+### Useful resources
 * [NukkitX/Protocol](https://github.com/NukkitX/Protocol)
 * [MiNET](https://github.com/NiclasOlofsson/MiNET/blob/master/src/MiNET/MiNET/Net/MCPE%20Protocol%20Documentation.md)
 * [pmmp](https://github.com/pmmp/PocketMine-MP/blob/master/src/pocketmine/network/mcpe/protocol/ProtocolInfo.php)
 * [minecraft-bedrock-documentation](https://github.com/MisteFr/minecraft-bedrock-documentation)
 * [DragonProxy](https://github.com/DragonetMC/DragonProxy)
+
+## Thanks to
+* [KernelFreeze](https://github.com/KernelFreeze) While none of his original code is still in use this project wouldn't exist without him.
+* The [NukkitX team](https://github.com/NukkitX/) for their Protocol library and all their help over on discord. 
+
+See ```AUTHORS.md``` for more info.
