@@ -237,13 +237,14 @@ public class PacketRegistry {
 
         @Override
         public boolean handle(ResourcePackClientResponsePacket packet) {
-            MineiaGo.getInstance().getLogger()
-                    .info("BedrockPacketHandler->ResourcePackClientResponsePacket " + packet.toString());
+            MineiaGo.getInstance().getLogging()
+                    .Info("BedrockPacketHandler->ResourcePackClientResponsePacket " + packet.toString());
 
-            /* MapInfoRequestPacket map_info = new MapInfoRequestPacket();
-            map_info.handle(handler);
-            map_info.setUniqueMapId(0);
-            player.getBedrockSession().sendPacket(map_info); */
+            /*
+             * MapInfoRequestPacket map_info = new MapInfoRequestPacket();
+             * map_info.handle(handler); map_info.setUniqueMapId(0);
+             * player.getBedrockSession().sendPacket(map_info);
+             */
 
             PlayStatusPacket status = new PlayStatusPacket();
             status.handle(handler);
