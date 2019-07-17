@@ -78,6 +78,7 @@ public class BedrockPlayer {
 
     public void createJavaClient() {
         // FIXME this should probably be handled completely differently!
+        // Maybe we should even directly send packets ourself since the sever will be in offlinemode anyways.
         try {
             MinecraftProtocol protocol;
             Client client;

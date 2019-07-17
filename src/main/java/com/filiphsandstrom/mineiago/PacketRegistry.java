@@ -123,7 +123,7 @@ public class PacketRegistry {
             MineiaGo.getInstance().getLogging().Debug(packet.toString());
 
             if (!player.isAuthenticated()) {
-                String data[] = packet.getFormData().replace("[null,", "").replace("]", "").replaceAll("\"", "").split(",");
+                String data[] = packet.getFormData().replace("[null,", "").replace("\"]", "").replaceAll("\"", "").split(",");
                 player.setUsername(data[0]);
                 player.setPassword(data[1]);
 
