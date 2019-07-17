@@ -266,13 +266,6 @@ public class PacketRegistry {
             status.handle(handler);
             status.setStatus(Status.PLAYER_SPAWN);
             player.getBedrockSession().sendPacket(status);
-
-            TextPacket text = new TextPacket();
-            text.setMessage("Mojang Email:");
-            text.setType(TextPacket.Type.CHAT);
-            text.setSourceName("login");
-            text.setXuid("login");
-            player.getBedrockSession().sendPacket(text);
             return true;
         }
     };
