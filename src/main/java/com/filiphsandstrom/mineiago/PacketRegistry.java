@@ -38,9 +38,9 @@ public class PacketRegistry {
             game.setUniqueEntityId(1);
             game.setRuntimeEntityId(1);
             game.setPlayerGamemode(1);
-            game.setPlayerPosition(new Vector3f(0, 75, 0));
+            game.setPlayerPosition(new Vector3f(0, 5, 0));
             game.setRotation(new Vector2f(0, 0));
-            game.setDefaultSpawn(new Vector3i(0, 75, 0));
+            game.setDefaultSpawn(new Vector3i(0, 5, 0));
             game.setMultiplayerGame(true);
             game.setXblBroadcastMode(GamePublishSetting.PUBLIC);
             game.setPlatformBroadcastMode(GamePublishSetting.PUBLIC);
@@ -80,14 +80,14 @@ public class PacketRegistry {
 
             SetSpawnPositionPacket spawn = new SetSpawnPositionPacket();
             spawn.handle(handler);
-            spawn.setBlockPosition(new Vector3i(0, 75, 0));
+            spawn.setBlockPosition(new Vector3i(0, 5, 0));
             spawn.setSpawnForced(false);
             spawn.setSpawnType(Type.PLAYER_SPAWN);
             player.getBedrockSession().sendPacket(spawn);
 
             MovePlayerPacket move = new MovePlayerPacket();
             move.handle(handler);
-            move.setPosition(new Vector3f(0, 75, 0));
+            move.setPosition(new Vector3f(0, 5, 0));
             move.setOnGround(true);
             move.setRotation(new Vector3f(0, 0, 0));
             move.setMode(Mode.NORMAL);
@@ -101,7 +101,7 @@ public class PacketRegistry {
 
             RespawnPacket respawn = new RespawnPacket();
             respawn.handle(handler);
-            respawn.setPosition(new Vector3f(0, 75, 0));
+            respawn.setPosition(new Vector3f(0, 5, 0));
             player.getBedrockSession().sendPacket(respawn);
 
             ResourcePacksInfoPacket resource_info = new ResourcePacksInfoPacket();
@@ -189,7 +189,7 @@ public class PacketRegistry {
                     for (int y = -1; y <= 1; y++) {
                         LevelChunkPacket chunk = new LevelChunkPacket();
                         chunk.handle(handler);
-                        chunk.setData(Chunk.getRaw());
+                        chunk.setData(Chunk.dump());
                         chunk.setChunkX(x);
                         chunk.setChunkZ(y);
                         chunk.setSubChunksLength(0);
