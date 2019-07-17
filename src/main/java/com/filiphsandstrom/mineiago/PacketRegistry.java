@@ -177,21 +177,21 @@ public class PacketRegistry {
 
             ChunkRadiusUpdatedPacket chunks = new ChunkRadiusUpdatedPacket();
             chunks.handle(handler);
-            chunks.setRadius(1);
+            chunks.setRadius(packet.getRadius());
             player.getBedrockSession().sendPacket(chunks);
 
             if (!player.isAuthenticated()) {
-                BedrockChunk Chunk = new BedrockChunk();
-                Chunk.setFlat();
-
                 Collection<BedrockPacket> chunk_packets = new ArrayList<BedrockPacket>();
                 for (int x = -1; x <= 1; x++) {
-                    for (int y = -1; y <= 1; y++) {
+                    for (int z = -1; z <= 1; z++) {
+                        BedrockChunk Chunk = new BedrockChunk(x, z);
+                        Chunk.setFlat();
+
                         LevelChunkPacket chunk = new LevelChunkPacket();
                         chunk.handle(handler);
                         chunk.setData(Chunk.dump());
                         chunk.setChunkX(x);
-                        chunk.setChunkZ(y);
+                        chunk.setChunkZ(z);
                         chunk.setSubChunksLength(0);
                         chunk.setCachingEnabled(false);
                         chunk_packets.add(chunk);
