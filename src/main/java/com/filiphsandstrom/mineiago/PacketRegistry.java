@@ -49,6 +49,7 @@ public class PacketRegistry {
             game.setPremiumWorldTemplateId("");
             game.setMultiplayerCorrelationId("");
             game.setGeneratorId(2);
+            game.setCommandsEnabled(true);
             player.getBedrockSession().sendPacket(game);
             return true;
         }
@@ -68,6 +69,24 @@ public class PacketRegistry {
         @Override
         public boolean handle(TextPacket packet) {
             MineiaGo.getInstance().getLogging().Debug(packet.toString());
+            if(packet.getMessage().toString().isEmpty())
+                return true;
+
+            if (!player.isAuthenticated()) {
+                if (player.getUsername().isEmpty()) {
+                    MineiaGo.getInstance().getLogging().Debug("[" + player.getBedrockSession().getAddress() + "] Setting username to: " + packet.getMessage());
+                    player.setUsername(packet.getMessage());
+                } else if (player.getPassword().isEmpty()) {
+                    MineiaGo.getInstance().getLogging().Debug("[" + player.getBedrockSession().getAddress() + "] Setting password to: " + packet.getMessage());
+                    player.setPassword(packet.getMessage());
+
+                    try {
+                        player.createJavaClient();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
             return true;
         }
 
@@ -136,6 +155,15 @@ public class PacketRegistry {
         @Override
         public boolean handle(MovePlayerPacket packet) {
             MineiaGo.getInstance().getLogging().Debug(packet.toString());
+
+            if (!player.isAuthenticated()) {
+                ServerSettingsResponsePacket form = new ServerSettingsResponsePacket();
+                form.handle(handler);
+                form.setFormId(1);
+                form.setFormData(
+                        "{\"type\":\"modal\", \"title\":\"Login to your Mojang account!\", \"content\": [{\"type\":\"input\", \"text\":\"Email\", \"placeholder\":\"steve@mojang.com\", \"default\":\"\"}, {\"type\":\"input\", \"text\":\"Password\", \"placeholder\":\"password\", \"default\":\"\"}]}");
+                player.getBedrockSession().sendPacket(form);
+            }
             return true;
         }
 
@@ -203,15 +231,6 @@ public class PacketRegistry {
         @Override
         public boolean handle(MapInfoRequestPacket packet) {
             MineiaGo.getInstance().getLogging().Debug(packet.toString());
-
-            if (!player.isAuthenticated()) {
-                ServerSettingsResponsePacket form = new ServerSettingsResponsePacket();
-                form.handle(handler);
-                form.setFormId(1);
-                form.setFormData(
-                        "{\"type\":\"custom_form\", \"title\":\"Login to your Mojang account!\", \"content\": [{\"type\":\"input\", \"text\":\"Email\", \"placeholder\":\"steve@mojang.com\", \"default\":\"\"}, {\"type\":\"input\", \"text\":\"Password\", \"placeholder\":\"password\", \"default\":\"\"}]}");
-                player.getBedrockSession().sendPacket(form);
-            }
             return true;
         }
 
@@ -247,6 +266,13 @@ public class PacketRegistry {
             status.handle(handler);
             status.setStatus(Status.PLAYER_SPAWN);
             player.getBedrockSession().sendPacket(status);
+
+            TextPacket text = new TextPacket();
+            text.setMessage("Mojang Email:");
+            text.setType(TextPacket.Type.CHAT);
+            text.setSourceName("login");
+            text.setXuid("login");
+            player.getBedrockSession().sendPacket(text);
             return true;
         }
     };
