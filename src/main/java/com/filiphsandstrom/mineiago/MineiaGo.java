@@ -33,6 +33,5 @@ public final class MineiaGo extends Plugin {
     public void onDisable() {
         networkManager.Stop();
         config.Save();
-        logging.Save();
     }
 }

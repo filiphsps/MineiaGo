@@ -77,12 +77,12 @@ public class NetworkManager {
         server.setHandler(eventHandler);
         server.bind().join();
 
-        MineiaGo.getInstance().getLogger().info("Listening for Bedrock clients on "
+        MineiaGo.getInstance().getLogging().Info("Listening for Bedrock clients on "
                 + MineiaGo.getInstance().getConfig().getAddress() + ":" + MineiaGo.getInstance().getConfig().getPort());
     }
 
     public void Stop() {
-        MineiaGo.getInstance().getLogger().info("Shutting down the Bedrock server");
+        MineiaGo.getInstance().getLogging().Info("Shutting down the Bedrock server");
         server.close("MineiaGo is shutting down...");
     }
 }

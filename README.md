@@ -28,7 +28,7 @@ Any help is appreciated, but especially with nbt & chunks.
 * [DragonProxy](https://github.com/DragonetMC/DragonProxy)
 
 ## Thanks to
-* [KernelFreeze](https://github.com/KernelFreeze) While none of his original code is still in use this project wouldn't exist without him.
+* [KernelFreeze](https://github.com/KernelFreeze) while none of his original code is still in use this project wouldn't exist without him.
 * The [NukkitX team](https://github.com/NukkitX/) for their Protocol library and all their help over on discord. 
 
 See ```AUTHORS.md``` for more info.

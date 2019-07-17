@@ -3,13 +3,14 @@ package com.filiphsandstrom.mineiago;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Logging {
     private File loggingFile;
-    PrintWriter printer;
 
     public Logging() {
         MineiaGo instance = MineiaGo.getInstance();
@@ -27,39 +28,58 @@ public class Logging {
                 return;
             }
         }
+    }
 
+    private void Print(String msg) {
+        if(MineiaGo.getInstance().getConfig().getLoglevel() >= 3)
+            return;
+
+        String file_content;
+        PrintWriter printer;
         try {
+            file_content = Files.readString(loggingFile.toPath(), StandardCharsets.UTF_8);
             printer = new PrintWriter(new FileWriter(loggingFile));
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
 
-    public void Save () {
+            MineiaGo.getInstance().getLogger()
+                    .warning("Failed to log message. Do we have the right directory permissions or is the disk full?");
+            return;
+        }
+
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        Date date = new Date();
+
+        String output = "[" + dateFormat.format(date) + "]" + msg + "\n";
+        printer.print(file_content + output);
         printer.close();
     }
 
-    private void Print (String msg) {
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-        Date date = new Date();
-        
-        String output = "[" + dateFormat.format(date) + "]" + msg + "\n";
-        printer.print(output);
+    public void Debug(String msg) {
+        if (MineiaGo.getInstance().getConfig().getLoglevel() <= -1) {
+            Print("[DEBUG]: " + msg);
+            MineiaGo.getInstance().getLogger().fine(msg);
+        }
     }
 
     public void Info(String msg) {
-        Print("[INFO]: " + msg);
+        if (MineiaGo.getInstance().getConfig().getLoglevel() <= 0) {
+            Print("[INFO]: " + msg);
+            MineiaGo.getInstance().getLogger().info(msg);
+        }
     }
 
     public void Warning(String msg) {
-        Print("[WARNING]: " + msg);
-    }
-
-    public void Error(String msg) {
-        Print("[ERROR]: " + msg);
+        if (MineiaGo.getInstance().getConfig().getLoglevel() <= 1) {
+            Print("[WARNING]: " + msg);
+            MineiaGo.getInstance().getLogger().warning(msg);
+        }
     }
 
     public void Fatal(String msg) {
-        Print("[FATAL]: " + msg);
+        if (MineiaGo.getInstance().getConfig().getLoglevel() <= 2) {
+            Print("[FATAL]: " + msg);
+            MineiaGo.getInstance().getLogger().severe(msg);
+        }
     }
 }

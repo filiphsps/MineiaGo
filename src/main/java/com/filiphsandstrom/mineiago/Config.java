@@ -17,7 +17,9 @@ public class Config {
     @Getter
     private int port;
     @Getter
-    public String servername;
+    private String servername;
+    @Getter
+    private int loglevel = -1;
 
     private Configuration config;
     public Configuration getConfig () {
@@ -54,10 +56,12 @@ public class Config {
         if(config.getString("address").isEmpty()) config.set("address", "0.0.0.0");
         if(config.getInt("port") <= 0) config.set("port", 19132);
         if(config.getString("server_name").isEmpty()) config.set("server_name", "A MineiaGo Server");
+        if(config.getInt("log_level") <= 0) config.set("log_level", -1);
 
         address = config.getString("address");
         port = config.getInt("port");
         servername = config.getString("server_name");
+        loglevel = config.getInt("log_level");
     }
 
     public void Save () {

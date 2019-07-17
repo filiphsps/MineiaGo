@@ -20,11 +20,10 @@ public class PacketRegistry {
 
     @NonNull
     public BedrockPacketHandler handler = new BedrockPacketHandler() {
+        // FIXME: separate between sent and received packets.
         @Override
         public boolean handle(LoginPacket packet) {
-            MineiaGo.getInstance().getLogging().Info("BedrockPacketHandler->LoginPacket");
-
-            MineiaGo.getInstance().getLogging().Info(packet.toString());
+            MineiaGo.getInstance().getLogging().Debug(packet.toString());
             player.setChainData(packet.getChainData().toString());
 
             PlayStatusPacket status = new PlayStatusPacket();
@@ -54,25 +53,25 @@ public class PacketRegistry {
 
         @Override
         public boolean handle(DisconnectPacket packet) {
-            MineiaGo.getInstance().getLogging().Info("BedrockPacketHandler->DisconnectPacket");
+            MineiaGo.getInstance().getLogging().Debug(packet.toString());
             return true;
         }
 
         @Override
         public boolean handle(PlayStatusPacket packet) {
-            MineiaGo.getInstance().getLogging().Info("BedrockPacketHandler->PlayStatusPacket");
+            MineiaGo.getInstance().getLogging().Debug(packet.toString());
             return true;
         }
 
         @Override
         public boolean handle(TextPacket packet) {
-            MineiaGo.getInstance().getLogging().Info("BedrockPacketHandler->TextPacket");
+            MineiaGo.getInstance().getLogging().Debug(packet.toString());
             return true;
         }
 
         @Override
         public boolean handle(StartGamePacket packet) {
-            MineiaGo.getInstance().getLogging().Info("BedrockPacketHandler->StartGamePacket");
+            MineiaGo.getInstance().getLogging().Debug(packet.toString());
 
             SetSpawnPositionPacket spawn = new SetSpawnPositionPacket();
             spawn.handle(handler);
@@ -108,50 +107,49 @@ public class PacketRegistry {
 
         @Override
         public boolean handle(ServerSettingsRequestPacket packet) {
-            MineiaGo.getInstance().getLogger()
-                    .info("BedrockPacketHandler->ServerSettingsRequestPacket " + packet.toString());
+            MineiaGo.getInstance().getLogging().Debug(packet.toString());
             return true;
         }
 
         @Override
         public boolean handle(ServerSettingsResponsePacket packet) {
-            MineiaGo.getInstance().getLogging().Info("BedrockPacketHandler->ServerSettingsResponsePacket");
+            MineiaGo.getInstance().getLogging().Debug(packet.toString());
             return false;
         }
 
         @Override
         public boolean handle(SetTimePacket packet) {
-            MineiaGo.getInstance().getLogging().Info("BedrockPacketHandler->SetTimePacket");
+            MineiaGo.getInstance().getLogging().Debug(packet.toString());
             return true;
         }
 
         @Override
         public boolean handle(RespawnPacket packet) {
-            MineiaGo.getInstance().getLogging().Info("BedrockPacketHandler->RespawnPacket");
+            MineiaGo.getInstance().getLogging().Debug(packet.toString());
             return true;
         }
 
         @Override
         public boolean handle(MovePlayerPacket packet) {
-            MineiaGo.getInstance().getLogging().Info("BedrockPacketHandler->MovePlayerPacket");
+            MineiaGo.getInstance().getLogging().Debug(packet.toString());
             return true;
         }
 
         @Override
         public boolean handle(SetSpawnPositionPacket packet) {
-            MineiaGo.getInstance().getLogging().Info("BedrockPacketHandler->SetSpawnPositionPacket");
+            MineiaGo.getInstance().getLogging().Debug(packet.toString());
             return true;
         }
 
         @Override
         public boolean handle(AdventureSettingsPacket packet) {
-            MineiaGo.getInstance().getLogging().Info("BedrockPacketHandler->AdventureSettingsPacket");
+            MineiaGo.getInstance().getLogging().Debug(packet.toString());
             return true;
         }
 
         @Override
         public boolean handle(RequestChunkRadiusPacket packet) {
-            MineiaGo.getInstance().getLogging().Info("BedrockPacketHandler->RequestChunkRadiusPacket");
+            MineiaGo.getInstance().getLogging().Debug(packet.toString());
 
             ChunkRadiusUpdatedPacket chunks = new ChunkRadiusUpdatedPacket();
             chunks.handle(handler);
@@ -186,25 +184,25 @@ public class PacketRegistry {
 
         @Override
         public boolean handle(ChunkRadiusUpdatedPacket packet) {
-            MineiaGo.getInstance().getLogging().Info("BedrockPacketHandler->ChunkRadiusUpdatedPacket");
+            MineiaGo.getInstance().getLogging().Debug(packet.toString());
             return true;
         }
 
         @Override
         public boolean handle(LevelChunkPacket packet) {
-            MineiaGo.getInstance().getLogging().Info("BedrockPacketHandler->LevelChunkPacket");
+            MineiaGo.getInstance().getLogging().Debug(packet.toString());
             return true;
         }
 
         @Override
         public boolean handle(ClientCacheStatusPacket packet) {
-            MineiaGo.getInstance().getLogging().Info("BedrockPacketHandler->ClientCacheStatusPacket");
+            MineiaGo.getInstance().getLogging().Debug(packet.toString());
             return true;
         }
 
         @Override
         public boolean handle(MapInfoRequestPacket packet) {
-            MineiaGo.getInstance().getLogging().Info("BedrockPacketHandler->MapInfoRequestPacket");
+            MineiaGo.getInstance().getLogging().Debug(packet.toString());
 
             if (!player.isAuthenticated()) {
                 ServerSettingsResponsePacket form = new ServerSettingsResponsePacket();
@@ -219,26 +217,25 @@ public class PacketRegistry {
 
         @Override
         public boolean handle(ResourcePackDataInfoPacket packet) {
-            MineiaGo.getInstance().getLogging().Info("BedrockPacketHandler->ResourcePackDataInfoPacket");
+            MineiaGo.getInstance().getLogging().Debug(packet.toString());
             return true;
         }
 
         @Override
         public boolean handle(ResourcePackStackPacket packet) {
-            MineiaGo.getInstance().getLogging().Info("BedrockPacketHandler->ResourcePackStackPacket");
+            MineiaGo.getInstance().getLogging().Debug(packet.toString());
             return true;
         }
 
         @Override
         public boolean handle(ResourcePackChunkRequestPacket packet) {
-            MineiaGo.getInstance().getLogging().Info("BedrockPacketHandler->ResourcePackChunkRequestPacket");
-            return false;
+            MineiaGo.getInstance().getLogging().Debug(packet.toString());
+            return true;
         }
 
         @Override
         public boolean handle(ResourcePackClientResponsePacket packet) {
-            MineiaGo.getInstance().getLogging()
-                    .Info("BedrockPacketHandler->ResourcePackClientResponsePacket " + packet.toString());
+            MineiaGo.getInstance().getLogging().Debug(packet.toString());
 
             /*
              * MapInfoRequestPacket map_info = new MapInfoRequestPacket();
