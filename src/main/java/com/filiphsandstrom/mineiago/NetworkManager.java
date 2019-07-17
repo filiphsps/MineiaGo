@@ -28,8 +28,8 @@ public class NetworkManager {
 
         BedrockPong pong = new BedrockPong();
         pong.setEdition("MCPE");
-        pong.setMotd(listenerInfo.getMotd());
-        pong.setSubMotd(MineiaGo.getInstance().getConfig().getSubmotd());
+        pong.setMotd(MineiaGo.getInstance().getConfig().getServername());
+        pong.setSubMotd(listenerInfo.getMotd());
         pong.setPlayerCount(ProxyServer.getInstance().getOnlineCount());
         pong.setMaximumPlayerCount(listenerInfo.getMaxPlayers());
         pong.setGameType("Survival");

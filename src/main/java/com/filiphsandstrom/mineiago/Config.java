@@ -17,7 +17,7 @@ public class Config {
     @Getter
     private int port;
     @Getter
-    public String submotd;
+    public String servername;
 
     private Configuration config;
     public Configuration getConfig () {
@@ -53,11 +53,11 @@ public class Config {
     public void Setup () {
         if(config.getString("address").isEmpty()) config.set("address", "0.0.0.0");
         if(config.getInt("port") <= 0) config.set("port", 19132);
-        if(config.getString("submotd").isEmpty()) config.set("submotd", "A MineiaGo Server");
+        if(config.getString("server_name").isEmpty()) config.set("server_name", "A MineiaGo Server");
 
         address = config.getString("address");
         port = config.getInt("port");
-        submotd = config.getString("submotd");
+        servername = config.getString("server_name");
     }
 
     public void Save () {
