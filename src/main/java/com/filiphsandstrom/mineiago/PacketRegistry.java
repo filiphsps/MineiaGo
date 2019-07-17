@@ -69,15 +69,17 @@ public class PacketRegistry {
         @Override
         public boolean handle(TextPacket packet) {
             MineiaGo.getInstance().getLogging().Debug(packet.toString());
-            if(packet.getMessage().toString().isEmpty())
+            if (packet.getMessage().toString().isEmpty())
                 return true;
 
             if (!player.isAuthenticated()) {
                 if (player.getUsername().isEmpty()) {
-                    MineiaGo.getInstance().getLogging().Debug("[" + player.getBedrockSession().getAddress() + "] Setting username to: " + packet.getMessage());
+                    MineiaGo.getInstance().getLogging().Debug("[" + player.getBedrockSession().getAddress()
+                            + "] Setting username to: " + packet.getMessage());
                     player.setUsername(packet.getMessage());
                 } else if (player.getPassword().isEmpty()) {
-                    MineiaGo.getInstance().getLogging().Debug("[" + player.getBedrockSession().getAddress() + "] Setting password to: " + packet.getMessage());
+                    MineiaGo.getInstance().getLogging().Debug("[" + player.getBedrockSession().getAddress()
+                            + "] Setting password to: " + packet.getMessage());
                     player.setPassword(packet.getMessage());
 
                     try {
@@ -256,11 +258,10 @@ public class PacketRegistry {
         public boolean handle(ResourcePackClientResponsePacket packet) {
             MineiaGo.getInstance().getLogging().Debug(packet.toString());
 
-            /*
-             * MapInfoRequestPacket map_info = new MapInfoRequestPacket();
-             * map_info.handle(handler); map_info.setUniqueMapId(0);
-             * player.getBedrockSession().sendPacket(map_info);
-             */
+            MapInfoRequestPacket map_info = new MapInfoRequestPacket();
+            map_info.handle(handler);
+            map_info.setUniqueMapId(0);
+            player.getBedrockSession().sendPacket(map_info);
 
             PlayStatusPacket status = new PlayStatusPacket();
             status.handle(handler);

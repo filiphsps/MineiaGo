@@ -113,7 +113,7 @@ public class BedrockPlayer {
 
                 @Override
                 public void disconnected(DisconnectedEvent event) {
-                    bedrockSession.disconnect(event.getCause().getMessage());
+                    bedrockSession.disconnect(event.getReason());
                 }
 
                 @Override
