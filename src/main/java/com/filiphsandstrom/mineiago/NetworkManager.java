@@ -2,16 +2,12 @@ package com.filiphsandstrom.mineiago;
 
 import com.filiphsandstrom.mineiago.packets.*;
 import com.nukkitx.protocol.bedrock.*;
-import com.nukkitx.protocol.bedrock.handler.*;
-import com.nukkitx.protocol.bedrock.handler.BatchHandler;
 import com.nukkitx.protocol.bedrock.v361.Bedrock_v361;
 
-import io.netty.buffer.ByteBuf;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ListenerInfo;
 
 import java.net.InetSocketAddress;
-import java.util.Collection;
 
 import lombok.Getter;
 
@@ -61,16 +57,8 @@ public class NetworkManager {
 
                 BedrockPackets packets = new BedrockPackets();
                 packets.player = player;
-                serverSession.setPacketHandler(packets.handler);
-                serverSession.setBatchedHandler(new BatchHandler() {
-                    @Override
-                    public void handle(BedrockSession session, ByteBuf compressed, Collection<BedrockPacket> packets) {
-                        for (BedrockPacket packet : packets) {
-                            BedrockPacketHandler handler = session.getPacketHandler();
-                            packet.handle(handler);
-                        }
-                    }
-                });
+                serverSession.setPacketHandler(packets.packetHandler);
+                serverSession.setBatchedHandler(packets.batchHandler);
             }
         };
 

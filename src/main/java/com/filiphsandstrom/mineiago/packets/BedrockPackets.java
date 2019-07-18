@@ -8,7 +8,9 @@ import com.flowpowered.math.vector.Vector2f;
 import com.flowpowered.math.vector.Vector3f;
 import com.flowpowered.math.vector.Vector3i;
 import com.nukkitx.protocol.bedrock.BedrockPacket;
+import com.nukkitx.protocol.bedrock.BedrockSession;
 import com.nukkitx.protocol.bedrock.data.GamePublishSetting;
+import com.nukkitx.protocol.bedrock.handler.BatchHandler;
 import com.nukkitx.protocol.bedrock.handler.BedrockPacketHandler;
 import com.nukkitx.protocol.bedrock.packet.*;
 import com.nukkitx.protocol.bedrock.packet.MovePlayerPacket.Mode;
@@ -16,13 +18,25 @@ import com.nukkitx.protocol.bedrock.packet.MovePlayerPacket.TeleportationCause;
 import com.nukkitx.protocol.bedrock.packet.PlayStatusPacket.Status;
 import com.nukkitx.protocol.bedrock.packet.SetSpawnPositionPacket.Type;
 
+import io.netty.buffer.ByteBuf;
 import lombok.NonNull;
 
 public class BedrockPackets {
     public BedrockPlayer player;
 
     @NonNull
-    public BedrockPacketHandler handler = new BedrockPacketHandler() {
+    public BatchHandler batchHandler = new BatchHandler(){
+        @Override
+        public void handle(BedrockSession session, ByteBuf compressed, Collection<BedrockPacket> packets) {
+            for (BedrockPacket packet : packets) {
+                BedrockPacketHandler handler = session.getPacketHandler();
+                packet.handle(packetHandler);
+            }
+        }
+    };
+
+    @NonNull
+    public BedrockPacketHandler packetHandler = new BedrockPacketHandler() {
         // FIXME: separate between sent and received packets.
         @Override
         public boolean handle(LoginPacket packet) {
@@ -30,18 +44,18 @@ public class BedrockPackets {
             player.setChainData(packet.getChainData().toString());
 
             PlayStatusPacket status = new PlayStatusPacket();
-            status.handle(handler);
+            status.handle(packetHandler);
             status.setStatus(Status.LOGIN_SUCCESS);
             player.getBedrockSession().sendPacket(status);
 
             ResourcePacksInfoPacket resource_info = new ResourcePacksInfoPacket();
-            resource_info.handle(handler);
+            resource_info.handle(packetHandler);
             resource_info.setForcedToAccept(false);
             resource_info.setScriptingEnabled(false);
             player.getBedrockSession().sendPacket(resource_info);
 
             StartGamePacket game = new StartGamePacket();
-            game.handle(handler);
+            game.handle(packetHandler);
             game.setUniqueEntityId(1);
             game.setRuntimeEntityId(1);
             game.setPlayerGamemode(1);
@@ -86,19 +100,19 @@ public class BedrockPackets {
             MineiaGo.getInstance().getLogging().Debug(packet.toString());
 
             SetTimePacket time = new SetTimePacket();
-            time.handle(handler);
+            time.handle(packetHandler);
             time.setTime(0);
             player.getBedrockSession().sendPacket(time);
 
             SetSpawnPositionPacket spawn = new SetSpawnPositionPacket();
-            spawn.handle(handler);
+            spawn.handle(packetHandler);
             spawn.setBlockPosition(new Vector3i(0, 5, 0));
             spawn.setSpawnForced(false);
             spawn.setSpawnType(Type.PLAYER_SPAWN);
             player.getBedrockSession().sendPacket(spawn);
 
             MovePlayerPacket move = new MovePlayerPacket();
-            move.handle(handler);
+            move.handle(packetHandler);
             move.setPosition(new Vector3f(0, 5, 0));
             move.setOnGround(true);
             move.setRotation(new Vector3f(0, 0, 0));
@@ -107,7 +121,7 @@ public class BedrockPackets {
             player.getBedrockSession().sendPacket(move);
 
             RespawnPacket respawn = new RespawnPacket();
-            respawn.handle(handler);
+            respawn.handle(packetHandler);
             respawn.setPosition(new Vector3f(0, 5, 0));
             player.getBedrockSession().sendPacket(respawn);
             return true;
@@ -154,7 +168,7 @@ public class BedrockPackets {
 
             if (!player.isAuthenticated()) {
                 ModalFormRequestPacket form = new ModalFormRequestPacket();
-                form.handle(handler);
+                form.handle(packetHandler);
                 form.setFormId(1);
                 form.setFormData(
                         "{\"type\":\"custom_form\", \"title\":\"Login to your Mojang account!\", \"content\": [{\"type\":\"label\", \"text\":\"Please login to your mojang account to access this sever!\"}, {\"type\":\"input\", \"text\":\"Email\", \"placeholder\":\"steve@mojang.com\", \"default\":\"\"}, {\"type\":\"input\", \"text\":\"Password\", \"placeholder\":\"password\", \"default\":\"\"}]}");
@@ -180,7 +194,7 @@ public class BedrockPackets {
             MineiaGo.getInstance().getLogging().Debug(packet.toString());
 
             ChunkRadiusUpdatedPacket chunks = new ChunkRadiusUpdatedPacket();
-            chunks.handle(handler);
+            chunks.handle(packetHandler);
             chunks.setRadius(packet.getRadius());
             player.getBedrockSession().sendPacket(chunks);
 
@@ -192,7 +206,7 @@ public class BedrockPackets {
                         Chunk.setFlat();
 
                         LevelChunkPacket chunk = new LevelChunkPacket();
-                        chunk.handle(handler);
+                        chunk.handle(packetHandler);
                         chunk.setData(Chunk.dump());
                         chunk.setChunkX(x);
                         chunk.setChunkZ(z);
@@ -253,18 +267,18 @@ public class BedrockPackets {
             MineiaGo.getInstance().getLogging().Debug(packet.toString());
 
             MapInfoRequestPacket map_info = new MapInfoRequestPacket();
-            map_info.handle(handler);
+            map_info.handle(packetHandler);
             map_info.setUniqueMapId(0);
             player.getBedrockSession().sendPacket(map_info);
 
             SetCommandsEnabledPacket commands_on = new SetCommandsEnabledPacket();
-            commands_on.handle(handler);
+            commands_on.handle(packetHandler);
             commands_on.setCommandsEnabled(true);
             player.getBedrockSession().sendPacket(commands_on);
 
             //TODO: only spawn after sending chunks
             PlayStatusPacket status = new PlayStatusPacket();
-            status.handle(handler);
+            status.handle(packetHandler);
             status.setStatus(Status.PLAYER_SPAWN);
             player.getBedrockSession().sendPacket(status);
             return true;
