@@ -24,3 +24,4 @@ out/
 # Vscode
 .vscode
 debug/
+*.code-workspace

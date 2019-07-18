@@ -35,7 +35,7 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 
-public class BedrockPlayer {
+public class MineiaGoSession {
     public static final String MOJANG_PUBLIC_KEY_BASE64 = "MHYwEAYHKoZIzj0CAQYFK4EEACIDYgAE8ELkixyLcwlZryUQcu1TvPOmI2B7vX83ndnWRUaXm74wFfa5f/lwQNTfrLVHa2PmenpGI6JhIMUJaWZrjmMj90NoKNFSNBuKdm8rYiXsfaz3K36x/1U26HpG0ZxK/V1V";
     public static PublicKey MOJANG_PUBLIC_KEY;
     static {
@@ -47,9 +47,8 @@ public class BedrockPlayer {
         }
     }
 
-    public BedrockPlayer(BedrockServerSession bedrock_session) {
+    public MineiaGoSession(BedrockServerSession bedrock_session) {
         setBedrockSession(bedrock_session);
-        // TODO: offline mode, direct connect to child server if enabled.
     }
 
     public void onDisconnect(String reason) {

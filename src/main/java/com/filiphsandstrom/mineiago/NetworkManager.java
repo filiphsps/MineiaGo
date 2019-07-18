@@ -47,7 +47,7 @@ public class NetworkManager {
             public void onSessionCreation(BedrockServerSession serverSession) {
                 MineiaGo.getInstance().getLogging().Debug("Session from " + serverSession.getAddress());
 
-                BedrockPlayer player = new BedrockPlayer(serverSession);
+                MineiaGoSession player = new MineiaGoSession(serverSession);
 
                 serverSession.setLogging(true);
                 serverSession.setPacketCodec(Bedrock_v361.V361_CODEC);

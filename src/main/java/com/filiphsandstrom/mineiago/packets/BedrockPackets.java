@@ -22,7 +22,7 @@ import io.netty.buffer.ByteBuf;
 import lombok.NonNull;
 
 public class BedrockPackets {
-    public BedrockPlayer player;
+    public MineiaGoSession player;
 
     @NonNull
     public BatchHandler batchHandler = new BatchHandler(){
@@ -136,14 +136,6 @@ public class BedrockPackets {
         @Override
         public boolean handle(ModalFormResponsePacket packet) {
             MineiaGo.getInstance().getLogging().Debug(packet.toString());
-
-            if (!player.isAuthenticated()) {
-                String data[] = packet.getFormData().replace("[null,", "").replace("\"]", "").replaceAll("\"", "").split(",");
-                player.setUsername(data[0]);
-                player.setPassword(data[1]);
-
-                player.createJavaClient();
-            }
             return true;
         }
 
@@ -161,19 +153,7 @@ public class BedrockPackets {
 
         @Override
         public boolean handle(MovePlayerPacket packet) {
-            if (packet.getPosition().toString().isEmpty())
-                return true;
-
             MineiaGo.getInstance().getLogging().Debug(packet.toString());
-
-            if (!player.isAuthenticated()) {
-                ModalFormRequestPacket form = new ModalFormRequestPacket();
-                form.handle(packetHandler);
-                form.setFormId(1);
-                form.setFormData(
-                        "{\"type\":\"custom_form\", \"title\":\"Login to your Mojang account!\", \"content\": [{\"type\":\"label\", \"text\":\"Please login to your mojang account to access this sever!\"}, {\"type\":\"input\", \"text\":\"Email\", \"placeholder\":\"steve@mojang.com\", \"default\":\"\"}, {\"type\":\"input\", \"text\":\"Password\", \"placeholder\":\"password\", \"default\":\"\"}]}");
-                player.getBedrockSession().sendPacket(form);
-            }
             return true;
         }
 
