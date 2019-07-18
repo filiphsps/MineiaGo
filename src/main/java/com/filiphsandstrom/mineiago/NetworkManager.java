@@ -1,6 +1,6 @@
 package com.filiphsandstrom.mineiago;
 
-import com.filiphsandstrom.mineiago.PacketRegistry;
+import com.filiphsandstrom.mineiago.packets.*;
 import com.nukkitx.protocol.bedrock.*;
 import com.nukkitx.protocol.bedrock.handler.*;
 import com.nukkitx.protocol.bedrock.handler.BatchHandler;
@@ -59,7 +59,7 @@ public class NetworkManager {
                 // FIXME: remove session on disconnect
                 // serverSession.addDisconnectHandler((reason) -> player.onDisconnect(reason));
 
-                PacketRegistry packets = new PacketRegistry();
+                BedrockPackets packets = new BedrockPackets();
                 packets.player = player;
                 serverSession.setPacketHandler(packets.handler);
                 serverSession.setBatchedHandler(new BatchHandler() {

@@ -1,5 +1,6 @@
-package com.filiphsandstrom.mineiago;
+package com.filiphsandstrom.mineiago.packets;
 
+import com.filiphsandstrom.mineiago.*;
 import java.util.*;
 
 import com.filiphsandstrom.mineiago.world.BedrockChunk;
@@ -17,7 +18,7 @@ import com.nukkitx.protocol.bedrock.packet.SetSpawnPositionPacket.Type;
 
 import lombok.NonNull;
 
-public class PacketRegistry {
+public class BedrockPackets {
     public BedrockPlayer player;
 
     @NonNull
