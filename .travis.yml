@@ -7,7 +7,7 @@ jdk:
 install: true
 script:
   - mvn -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true clean eclipse:eclipse install
-  - mvn cobertura:cobertura
+# - mvn cobertura:cobertura
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
