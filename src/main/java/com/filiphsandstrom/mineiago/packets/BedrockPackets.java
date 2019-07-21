@@ -98,11 +98,6 @@ public class BedrockPackets {
         public boolean handle(StartGamePacket packet) {
             MineiaGo.getInstance().getLogging().Debug(packet.toString());
 
-            SetTimePacket time = new SetTimePacket();
-            time.handle(packetHandler);
-            time.setTime(0);
-            player.getBedrockSession().sendPacket(time);
-
             SetSpawnPositionPacket spawn = new SetSpawnPositionPacket();
             spawn.handle(packetHandler);
             spawn.setBlockPosition(new Vector3i(0, 5, 0));

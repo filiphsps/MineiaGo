@@ -196,7 +196,7 @@ public class MineiaGoSession {
                 @Override
                 public void packetReceived(PacketReceivedEvent event) {
                     // TODO
-                    // MineiaGo.getInstance().getLogging().Debug("[JAVA] " + event.getPacket().toString());
+                    MineiaGo.getInstance().getLogging().Debug("[JAVA] " + event.getPacket().toString());
                     packets.handlePacket(event.getPacket().getClass().getSimpleName(), event.getPacket(), session);
                 }
 
