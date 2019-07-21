@@ -140,7 +140,7 @@
         <!-- Minecraft protocol -->
         <dependency>
             <groupId>com.github.Steveice10</groupId>
-            <artifactId>mcprotocollib</artifactId>
+            <artifactId>MCProtocolLib</artifactId>
             <version>-SNAPSHOT</version>
         </dependency>
 

@@ -2,6 +2,7 @@ package com.filiphsandstrom.mineiago;
 
 import java.io.File;
 import java.io.InputStream;
+import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.nio.file.Files;
 import java.security.KeyFactory;
@@ -9,6 +10,8 @@ import java.security.PublicKey;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
+import com.filiphsandstrom.mineiago.*;
+import com.filiphsandstrom.mineiago.packets.JavaPackets;
 import com.github.steveice10.mc.protocol.MinecraftProtocol;
 import com.github.steveice10.packetlib.Client;
 import com.github.steveice10.packetlib.Session;
@@ -31,6 +34,7 @@ import com.nukkitx.protocol.bedrock.BedrockServerSession;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
@@ -53,6 +57,7 @@ public class MineiaGoSession {
 
     public void onDisconnect(String reason) {
         // FIXME
+        MineiaGo.getInstance().getLogging().Info("Player " + getPlayerInfo().getUsername() + " left (" + reason + ")!");
         return;
     }
 
@@ -118,6 +123,9 @@ public class MineiaGoSession {
             e.printStackTrace();
             return;
         }
+
+        MineiaGo.getInstance().getLogging().Info("Player " + getPlayerInfo().getUsername() + " connected!");
+        createJavaClient();
     }
 
     @Getter
@@ -131,25 +139,28 @@ public class MineiaGoSession {
     @Setter
     private Session javaSession;
 
-    @Getter
-    @Setter
-    private String username = "";
-
-    @Getter
-    @Setter
-    private String password = "";
-
     public void createJavaClient() {
+        MineiaGoSession session = this;
+
         // FIXME this should probably be handled completely differently!
         // Maybe we should even directly send packets ourself since the sever will be in
         // offlinemode anyways.
         try {
+            JavaPackets packets = new JavaPackets();
             MinecraftProtocol protocol;
             Client client;
 
+            // FIXME: get default serveer
+            InetSocketAddress address = ProxyServer.getInstance().getConfig().getServers().get(ProxyServer.getInstance()
+                    .getConfig().getListeners().stream().findFirst().orElseGet(null).getDefaultServer()).getAddress();
+            
+            MineiaGo.getInstance().getLogging()
+                    .Debug(address.getHostName() + " " + address.getPort());
+
             try {
-                protocol = new MinecraftProtocol(username, password);
-                client = new Client("0.0.0.0", 25565, protocol, new TcpSessionFactory(Proxy.NO_PROXY));
+                protocol = new MinecraftProtocol(getPlayerInfo().getUsername());
+                client = new Client(address.getHostName(), address.getPort(), protocol,
+                        new TcpSessionFactory(Proxy.NO_PROXY));
             } catch (Exception e) {
                 bedrockSession.disconnect(e.getMessage());
                 return;
@@ -185,6 +196,8 @@ public class MineiaGoSession {
                 @Override
                 public void packetReceived(PacketReceivedEvent event) {
                     // TODO
+                    // MineiaGo.getInstance().getLogging().Debug("[JAVA] " + event.getPacket().toString());
+                    packets.handlePacket(event.getPacket().getClass().getSimpleName(), event.getPacket(), session);
                 }
 
                 @Override
@@ -200,9 +213,5 @@ public class MineiaGoSession {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public boolean isAuthenticated() {
-        return (!password.isEmpty() && !username.isEmpty());
     }
 }

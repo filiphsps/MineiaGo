@@ -1,5 +1,6 @@
 package com.filiphsandstrom.mineiago;
 
+import com.filiphsandstrom.mineiago.*;
 import com.filiphsandstrom.mineiago.packets.*;
 import com.nukkitx.protocol.bedrock.*;
 import com.nukkitx.protocol.bedrock.v361.Bedrock_v361;
@@ -51,9 +52,7 @@ public class NetworkManager {
 
                 serverSession.setLogging(true);
                 serverSession.setPacketCodec(Bedrock_v361.V361_CODEC);
-
-                // FIXME: remove session on disconnect
-                // serverSession.addDisconnectHandler((reason) -> player.onDisconnect(reason));
+                serverSession.addDisconnectHandler((reason) -> player.onDisconnect(reason.toString()));
 
                 BedrockPackets packets = new BedrockPackets();
                 packets.player = player;

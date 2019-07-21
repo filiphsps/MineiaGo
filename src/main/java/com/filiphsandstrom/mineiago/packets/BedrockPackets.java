@@ -3,7 +3,6 @@ package com.filiphsandstrom.mineiago.packets;
 import com.filiphsandstrom.mineiago.*;
 import java.util.*;
 
-import com.filiphsandstrom.mineiago.world.BedrockChunk;
 import com.flowpowered.math.vector.Vector2f;
 import com.flowpowered.math.vector.Vector3f;
 import com.flowpowered.math.vector.Vector3i;
@@ -25,7 +24,7 @@ public class BedrockPackets {
     public MineiaGoSession player;
 
     @NonNull
-    public BatchHandler batchHandler = new BatchHandler(){
+    public BatchHandler batchHandler = new BatchHandler() {
         @Override
         public void handle(BedrockSession session, ByteBuf compressed, Collection<BedrockPacket> packets) {
             for (BedrockPacket packet : packets) {
@@ -178,25 +177,18 @@ public class BedrockPackets {
             chunks.setRadius(packet.getRadius());
             player.getBedrockSession().sendPacket(chunks);
 
-            if (!player.isAuthenticated()) {
-                Collection<BedrockPacket> chunk_packets = new ArrayList<BedrockPacket>();
-                for (int x = -1; x <= 1; x++) {
-                    for (int z = -1; z <= 1; z++) {
-                        BedrockChunk Chunk = new BedrockChunk(x, z);
-                        Chunk.setFlat();
-
-                        LevelChunkPacket chunk = new LevelChunkPacket();
-                        chunk.handle(packetHandler);
-                        chunk.setData(Chunk.dump());
-                        chunk.setChunkX(x);
-                        chunk.setChunkZ(z);
-                        chunk.setSubChunksLength(0);
-                        chunk.setCachingEnabled(false);
-                        chunk_packets.add(chunk);
-                    }
-                }
-                player.getBedrockSession().sendWrapped(chunk_packets, false);
-            }
+            /*
+             * if (!player.isAuthenticated()) { Collection<BedrockPacket> chunk_packets =
+             * new ArrayList<BedrockPacket>(); for (int x = -1; x <= 1; x++) { for (int z =
+             * -1; z <= 1; z++) { BedrockChunk Chunk = new BedrockChunk(x, z);
+             * Chunk.setFlat();
+             * 
+             * LevelChunkPacket chunk = new LevelChunkPacket(); chunk.handle(packetHandler);
+             * chunk.setData(Chunk.dump()); chunk.setChunkX(x); chunk.setChunkZ(z);
+             * chunk.setSubChunksLength(0); chunk.setCachingEnabled(false);
+             * chunk_packets.add(chunk); } }
+             * player.getBedrockSession().sendWrapped(chunk_packets, false); }
+             */
             return true;
         }
 
@@ -256,7 +248,7 @@ public class BedrockPackets {
             commands_on.setCommandsEnabled(true);
             player.getBedrockSession().sendPacket(commands_on);
 
-            //TODO: only spawn after sending chunks
+            // TODO: only spawn after sending chunks
             PlayStatusPacket status = new PlayStatusPacket();
             status.handle(packetHandler);
             status.setStatus(Status.PLAYER_SPAWN);
