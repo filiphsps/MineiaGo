@@ -10,7 +10,9 @@ public class ServerChatPacket {
         
         TextPacket text = new TextPacket();
         text.setMessage(packet.getMessage().getFullText());
-        text.setType(Type.CHAT);
+        text.setType(Type.CHAT); // FIXME: use correct type
+        text.setNeedsTranslation(false);
+        text.setPlatformChatId("");
         session.getBedrockSession().sendPacket(text);
     }
 }
