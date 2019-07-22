@@ -2,10 +2,15 @@ package com.filiphsandstrom.mineiago.packets.java;
 
 import com.filiphsandstrom.mineiago.MineiaGoSession;
 import com.nukkitx.protocol.bedrock.packet.SetPlayerGameTypePacket;
+// import com.nukkitx.protocol.bedrock.packet.SetDifficultyPacket;
 
 public class ServerJoinGamePacket {
     public ServerJoinGamePacket(com.github.steveice10.mc.protocol.packet.ingame.server.ServerJoinGamePacket packet,
             MineiaGoSession session) {
+
+        //SetDifficultyPacket difficulty = new SetDifficultyPacket();
+        //difficulty.setDifficulty(packet.get);
+        //session.getBedrockSession().sendPacket(difficulty);
         
         SetPlayerGameTypePacket gamemode = new SetPlayerGameTypePacket();
         switch(packet.getGameMode()) {

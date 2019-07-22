@@ -17,11 +17,8 @@ import com.github.steveice10.packetlib.Client;
 import com.github.steveice10.packetlib.Session;
 import com.github.steveice10.packetlib.event.session.ConnectedEvent;
 import com.github.steveice10.packetlib.event.session.DisconnectedEvent;
-import com.github.steveice10.packetlib.event.session.DisconnectingEvent;
 import com.github.steveice10.packetlib.event.session.PacketReceivedEvent;
-import com.github.steveice10.packetlib.event.session.PacketSendingEvent;
-import com.github.steveice10.packetlib.event.session.PacketSentEvent;
-import com.github.steveice10.packetlib.event.session.SessionListener;
+import com.github.steveice10.packetlib.event.session.SessionAdapter;
 import com.github.steveice10.packetlib.tcp.TcpSessionFactory;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -176,23 +173,7 @@ public class MineiaGoSession {
                 return;
             }
 
-            client.getSession().addListener(new SessionListener() {
-
-                @Override
-                public void packetSent(PacketSentEvent event) {
-                    return;
-                }
-
-                @Override
-                public void packetSending(PacketSendingEvent event) {
-                    return;
-                }
-
-                @Override
-                public void disconnecting(DisconnectingEvent event) {
-                    return;
-                }
-
+            client.getSession().addListener(new SessionAdapter() {
                 @Override
                 public void packetReceived(PacketReceivedEvent event) {
                     // TODO
