@@ -15,7 +15,7 @@ public class ServerChatPacket {
 
         switch (packet.getType()) {
             case SYSTEM:
-                text.setType(Type.SYSTEM);
+                text.setType(Type.ANNOUNCEMENT);
                 break;
             case NOTIFICATION:
                 text.setType(Type.POPUP);
@@ -25,7 +25,6 @@ public class ServerChatPacket {
                 text.setType(Type.CHAT);
                 break;
         }
-        text.setType(Type.CHAT);
         text.setNeedsTranslation(false);
         text.setPlatformChatId("");
         text.setParameters(null);
