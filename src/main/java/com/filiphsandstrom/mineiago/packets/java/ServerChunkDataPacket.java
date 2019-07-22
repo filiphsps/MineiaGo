@@ -13,6 +13,7 @@ public class ServerChunkDataPacket {
             MineiaGoSession session) {
         
         LevelChunkPacket chunk = new LevelChunkPacket();
+        chunk.handle(session.getBedrockSession().getPacketHandler());
         chunk.setChunkX(packet.getColumn().getX());
         chunk.setChunkZ(packet.getColumn().getZ());
         chunk.setCachingEnabled(false);

@@ -3,12 +3,10 @@ package com.filiphsandstrom.mineiago.packets;
 import com.filiphsandstrom.mineiago.*;
 import java.util.*;
 
-import com.flowpowered.math.vector.Vector2f;
 import com.flowpowered.math.vector.Vector3f;
 import com.flowpowered.math.vector.Vector3i;
 import com.nukkitx.protocol.bedrock.BedrockPacket;
 import com.nukkitx.protocol.bedrock.BedrockSession;
-import com.nukkitx.protocol.bedrock.data.GamePublishSetting;
 import com.nukkitx.protocol.bedrock.handler.BatchHandler;
 import com.nukkitx.protocol.bedrock.handler.BedrockPacketHandler;
 import com.nukkitx.protocol.bedrock.packet.*;
@@ -29,7 +27,7 @@ public class BedrockPackets {
         public void handle(BedrockSession session, ByteBuf compressed, Collection<BedrockPacket> packets) {
             for (BedrockPacket packet : packets) {
                 BedrockPacketHandler handler = session.getPacketHandler();
-                packet.handle(packetHandler);
+                packet.handle(handler);
             }
         }
     };
@@ -52,25 +50,6 @@ public class BedrockPackets {
             resource_info.setForcedToAccept(false);
             resource_info.setScriptingEnabled(false);
             player.getBedrockSession().sendPacket(resource_info);
-
-            StartGamePacket game = new StartGamePacket();
-            game.handle(packetHandler);
-            game.setUniqueEntityId(1);
-            game.setRuntimeEntityId(1);
-            game.setPlayerGamemode(1);
-            game.setPlayerPosition(new Vector3f(0, 5, 0));
-            game.setRotation(new Vector2f(0, 0));
-            game.setDefaultSpawn(new Vector3i(0, 5, 0));
-            game.setMultiplayerGame(true);
-            game.setXblBroadcastMode(GamePublishSetting.PUBLIC);
-            game.setPlatformBroadcastMode(GamePublishSetting.PUBLIC);
-            game.setLevelId(MineiaGo.getInstance().getConfig().getServername());
-            game.setWorldName(MineiaGo.getInstance().getConfig().getServername());
-            game.setPremiumWorldTemplateId("");
-            game.setMultiplayerCorrelationId("");
-            game.setGeneratorId(2);
-            game.setCommandsEnabled(true);
-            player.getBedrockSession().sendPacket(game);
             return true;
         }
 
@@ -89,8 +68,6 @@ public class BedrockPackets {
         @Override
         public boolean handle(TextPacket packet) {
             MineiaGo.getInstance().getLogging().Debug(packet.toString());
-            if (packet.getMessage().toString().isEmpty())
-                return true;
             return true;
         }
 
@@ -171,19 +148,6 @@ public class BedrockPackets {
             chunks.handle(packetHandler);
             chunks.setRadius(packet.getRadius());
             player.getBedrockSession().sendPacket(chunks);
-
-            /*
-             * if (!player.isAuthenticated()) { Collection<BedrockPacket> chunk_packets =
-             * new ArrayList<BedrockPacket>(); for (int x = -1; x <= 1; x++) { for (int z =
-             * -1; z <= 1; z++) { BedrockChunk Chunk = new BedrockChunk(x, z);
-             * Chunk.setFlat();
-             * 
-             * LevelChunkPacket chunk = new LevelChunkPacket(); chunk.handle(packetHandler);
-             * chunk.setData(Chunk.dump()); chunk.setChunkX(x); chunk.setChunkZ(z);
-             * chunk.setSubChunksLength(0); chunk.setCachingEnabled(false);
-             * chunk_packets.add(chunk); } }
-             * player.getBedrockSession().sendWrapped(chunk_packets, false); }
-             */
             return true;
         }
 
@@ -242,12 +206,6 @@ public class BedrockPackets {
             commands_on.handle(packetHandler);
             commands_on.setCommandsEnabled(true);
             player.getBedrockSession().sendPacket(commands_on);
-
-            // TODO: only spawn after sending chunks
-            PlayStatusPacket status = new PlayStatusPacket();
-            status.handle(packetHandler);
-            status.setStatus(Status.PLAYER_SPAWN);
-            player.getBedrockSession().sendPacket(status);
             return true;
         }
     };

@@ -1,28 +1,59 @@
 package com.filiphsandstrom.mineiago.packets.java;
 
+import com.filiphsandstrom.mineiago.MineiaGo;
 import com.filiphsandstrom.mineiago.MineiaGoSession;
-import com.nukkitx.protocol.bedrock.packet.SetPlayerGameTypePacket;
-// import com.nukkitx.protocol.bedrock.packet.SetDifficultyPacket;
+import com.flowpowered.math.vector.Vector2f;
+import com.flowpowered.math.vector.Vector3f;
+import com.flowpowered.math.vector.Vector3i;
+import com.nukkitx.protocol.bedrock.data.GamePublishSetting;
+import com.nukkitx.protocol.bedrock.packet.PlayStatusPacket;
+import com.nukkitx.protocol.bedrock.packet.StartGamePacket;
+import com.nukkitx.protocol.bedrock.packet.PlayStatusPacket.Status;
 
 public class ServerJoinGamePacket {
     public ServerJoinGamePacket(com.github.steveice10.mc.protocol.packet.ingame.server.ServerJoinGamePacket packet,
             MineiaGoSession session) {
 
-        //SetDifficultyPacket difficulty = new SetDifficultyPacket();
-        //difficulty.setDifficulty(packet.get);
-        //session.getBedrockSession().sendPacket(difficulty);
-        
-        SetPlayerGameTypePacket gamemode = new SetPlayerGameTypePacket();
-        switch(packet.getGameMode()) {
-            case SURVIVAL:
-                gamemode.setGamemode(0);
-            case CREATIVE:
-                gamemode.setGamemode(1);
-            case ADVENTURE:
-                gamemode.setGamemode(2);
-            case SPECTATOR:
-                gamemode.setGamemode(3);
+        // SetDifficultyPacket difficulty = new SetDifficultyPacket();
+        // difficulty.setDifficulty(packet.get);
+        // session.getBedrockSession().sendPacket(difficulty);
+
+        StartGamePacket game = new StartGamePacket();
+        game.handle(session.getBedrockSession().getPacketHandler());
+        game.setUniqueEntityId(packet.getEntityId());
+        game.setRuntimeEntityId(packet.getEntityId());
+        game.setPlayerPosition(new Vector3f(0, 0, 0));
+        game.setRotation(new Vector2f(0, 0));
+        game.setDefaultSpawn(new Vector3i(0, 0, 0));
+        game.setMultiplayerGame(true);
+        game.setXblBroadcastMode(GamePublishSetting.PUBLIC);
+        game.setPlatformBroadcastMode(GamePublishSetting.PUBLIC);
+        game.setLevelId(MineiaGo.getInstance().getConfig().getServername());
+        game.setWorldName(MineiaGo.getInstance().getConfig().getServername());
+        game.setPremiumWorldTemplateId("");
+        game.setMultiplayerCorrelationId("");
+        game.setGeneratorId(2);
+        game.setCommandsEnabled(true);
+
+        switch (packet.getGameMode()) {
+        case SURVIVAL:
+            game.setPlayerGamemode(0);
+            break;
+        case CREATIVE:
+            game.setPlayerGamemode(1);
+            break;
+        case ADVENTURE:
+            game.setPlayerGamemode(2);
+            break;
+        case SPECTATOR:
+            game.setPlayerGamemode(3);
+            break;
         }
-        session.getBedrockSession().sendPacket(gamemode);
+        session.getBedrockSession().sendPacket(game);
+
+        PlayStatusPacket status = new PlayStatusPacket();
+        status.handle(session.getBedrockSession().getPacketHandler());
+        status.setStatus(Status.PLAYER_SPAWN);
+        session.getBedrockSession().sendPacket(status);
     }
 }

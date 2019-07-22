@@ -150,9 +150,6 @@ public class MineiaGoSession {
             // FIXME: get default serveer
             InetSocketAddress address = ProxyServer.getInstance().getConfig().getServers().get(ProxyServer.getInstance()
                     .getConfig().getListeners().stream().findFirst().orElseGet(null).getDefaultServer()).getAddress();
-            
-            MineiaGo.getInstance().getLogging()
-                    .Debug(address.getHostName() + " " + address.getPort());
 
             try {
                 protocol = new MinecraftProtocol(getPlayerInfo().getUsername());
@@ -177,7 +174,7 @@ public class MineiaGoSession {
                 @Override
                 public void packetReceived(PacketReceivedEvent event) {
                     // TODO
-                    MineiaGo.getInstance().getLogging().Debug("[JAVA] " + event.getPacket().toString());
+                    // MineiaGo.getInstance().getLogging().Debug("[JAVA] " + event.getPacket().toString());
                     packets.handlePacket(event.getPacket().getClass().getSimpleName(), event.getPacket(), session);
                 }
 

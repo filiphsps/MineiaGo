@@ -10,6 +10,7 @@ public class ServerPlayerPositionRotationPacket {
             MineiaGoSession session) {
         
         MovePlayerPacket pos = new MovePlayerPacket();
+        pos.handle(session.getBedrockSession().getPacketHandler());
         pos.setPosition(new Vector3f(packet.getX(), packet.getY(), packet.getZ()));
         session.getBedrockSession().sendPacket(pos);
     }

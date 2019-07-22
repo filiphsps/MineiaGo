@@ -8,6 +8,7 @@ public class ServerUpdateTimePacket {
             MineiaGoSession session) {
         
         SetTimePacket time = new SetTimePacket();
+        time.handle(session.getBedrockSession().getPacketHandler());
         time.setTime((int)packet.getTime());
         session.getBedrockSession().sendPacket(time);
     }
