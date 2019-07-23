@@ -36,6 +36,7 @@ public final class MineiaGo extends Plugin {
         logging = new Logging();
         config = new Config();
         networkManager = new NetworkManager();
+        sessions = new ArrayList<MineiaGoSession>();
     }
 
     @Override
