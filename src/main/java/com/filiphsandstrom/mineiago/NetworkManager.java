@@ -48,14 +48,15 @@ public class NetworkManager {
             public void onSessionCreation(BedrockServerSession serverSession) {
                 MineiaGo.getInstance().getLogging().Debug("Session from " + serverSession.getAddress());
 
-                MineiaGoSession player = new MineiaGoSession(serverSession);
+                MineiaGoSession session = new MineiaGoSession(serverSession);
+                MineiaGo.getInstance().getSessions().add(session);
 
                 serverSession.setLogging(true);
                 serverSession.setPacketCodec(Bedrock_v361.V361_CODEC);
-                serverSession.addDisconnectHandler((reason) -> player.onDisconnect(reason.toString()));
+                serverSession.addDisconnectHandler((reason) -> session.onDisconnect(reason.toString()));
 
                 BedrockPackets packets = new BedrockPackets();
-                packets.player = player;
+                packets.session = session;
                 serverSession.setPacketHandler(packets.packetHandler);
                 serverSession.setBatchedHandler(packets.batchHandler);
             }

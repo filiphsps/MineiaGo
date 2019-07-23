@@ -19,7 +19,7 @@ import io.netty.buffer.ByteBuf;
 import lombok.NonNull;
 
 public class BedrockPackets {
-    public MineiaGoSession player;
+    public MineiaGoSession session;
 
     @NonNull
     public BatchHandler batchHandler = new BatchHandler() {
@@ -38,18 +38,18 @@ public class BedrockPackets {
         @Override
         public boolean handle(LoginPacket packet) {
             MineiaGo.getInstance().getLogging().Debug(packet.toString());
-            player.setChainData(packet.getChainData().toString());
+            session.setChainData(packet.getChainData().toString());
 
             PlayStatusPacket status = new PlayStatusPacket();
             status.handle(packetHandler);
             status.setStatus(Status.LOGIN_SUCCESS);
-            player.getBedrockSession().sendPacket(status);
+            session.getBedrockSession().sendPacket(status);
 
             ResourcePacksInfoPacket resource_info = new ResourcePacksInfoPacket();
             resource_info.handle(packetHandler);
             resource_info.setForcedToAccept(false);
             resource_info.setScriptingEnabled(false);
-            player.getBedrockSession().sendPacket(resource_info);
+            session.getBedrockSession().sendPacket(resource_info);
             return true;
         }
 
@@ -80,7 +80,7 @@ public class BedrockPackets {
             spawn.setBlockPosition(new Vector3i(0, 5, 0));
             spawn.setSpawnForced(false);
             spawn.setSpawnType(Type.PLAYER_SPAWN);
-            player.getBedrockSession().sendPacket(spawn);
+            session.getBedrockSession().sendPacket(spawn);
 
             MovePlayerPacket move = new MovePlayerPacket();
             move.handle(packetHandler);
@@ -89,12 +89,12 @@ public class BedrockPackets {
             move.setRotation(new Vector3f(0, 0, 0));
             move.setMode(Mode.NORMAL);
             move.setTeleportationCause(TeleportationCause.UNKNOWN);
-            player.getBedrockSession().sendPacket(move);
+            session.getBedrockSession().sendPacket(move);
 
             RespawnPacket respawn = new RespawnPacket();
             respawn.handle(packetHandler);
             respawn.setPosition(new Vector3f(0, 5, 0));
-            player.getBedrockSession().sendPacket(respawn);
+            session.getBedrockSession().sendPacket(respawn);
             return true;
         }
 
@@ -147,7 +147,7 @@ public class BedrockPackets {
             ChunkRadiusUpdatedPacket chunks = new ChunkRadiusUpdatedPacket();
             chunks.handle(packetHandler);
             chunks.setRadius(packet.getRadius());
-            player.getBedrockSession().sendPacket(chunks);
+            session.getBedrockSession().sendPacket(chunks);
             return true;
         }
 
@@ -200,12 +200,12 @@ public class BedrockPackets {
             MapInfoRequestPacket map_info = new MapInfoRequestPacket();
             map_info.handle(packetHandler);
             map_info.setUniqueMapId(0);
-            player.getBedrockSession().sendPacket(map_info);
+            session.getBedrockSession().sendPacket(map_info);
 
             SetCommandsEnabledPacket commands_on = new SetCommandsEnabledPacket();
             commands_on.handle(packetHandler);
             commands_on.setCommandsEnabled(true);
-            player.getBedrockSession().sendPacket(commands_on);
+            session.getBedrockSession().sendPacket(commands_on);
             return true;
         }
     };

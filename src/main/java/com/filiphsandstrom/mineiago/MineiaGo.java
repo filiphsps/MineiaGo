@@ -2,6 +2,8 @@ package com.filiphsandstrom.mineiago;
 
 import net.md_5.bungee.api.plugin.Plugin;
 
+import java.util.ArrayList;
+
 import com.filiphsandstrom.mineiago.utils.Config;
 import com.filiphsandstrom.mineiago.utils.Logging;
 
@@ -22,6 +24,9 @@ public final class MineiaGo extends Plugin {
     private NetworkManager networkManager;
     @Getter
     private Config config;
+
+    @Getter
+    private ArrayList<MineiaGoSession> sessions;
 
     @Override
     public void onEnable() {

@@ -53,7 +53,7 @@ public class MineiaGoSession {
     }
 
     public void onDisconnect(String reason) {
-        // FIXME
+        // FIXME: remove current session from MineiaGo.getInstance().getSessions()
         MineiaGo.getInstance().getLogging().Info("Player " + getPlayerInfo().getUsername() + " left (" + reason + ")!");
         return;
     }
