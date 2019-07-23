@@ -1,6 +1,10 @@
 package com.filiphsandstrom.mineiago;
 
 import net.md_5.bungee.api.plugin.Plugin;
+
+import com.filiphsandstrom.mineiago.utils.Config;
+import com.filiphsandstrom.mineiago.utils.Logging;
+
 import org.bstats.bungeecord.*;
 
 import lombok.Getter;

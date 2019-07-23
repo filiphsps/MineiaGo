@@ -1,4 +1,4 @@
-package com.filiphsandstrom.mineiago;
+package com.filiphsandstrom.mineiago.utils;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -8,6 +8,8 @@ import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import com.filiphsandstrom.mineiago.MineiaGo;
 
 public class Logging {
     private File loggingFile;

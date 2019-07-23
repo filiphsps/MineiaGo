@@ -1,4 +1,4 @@
-package com.filiphsandstrom.mineiago;
+package com.filiphsandstrom.mineiago.utils;
 
 import java.io.File;
 import java.nio.file.*;
@@ -10,6 +10,9 @@ import java.io.InputStream;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
+
+
+import com.filiphsandstrom.mineiago.MineiaGo;
 
 public class Config {
     @Getter
