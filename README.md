@@ -5,6 +5,8 @@ MineaGo is a BungeeCord plugin that allows bedrock clients to connect to your se
 
 This the current author's ([@filfat](https://github.com/filfat)) first project in Java so don't be surprised if the code feels C++ or JavaScript-like.
 
+[![Analytics](https://bstats.org/signatures/bungeecord/MineiaGo.svg)](https://bstats.org/plugin/bungeecord/MineiaGo)
+
 ## Requirements
 * openjdk11
 * maven

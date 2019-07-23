@@ -25,6 +25,7 @@ public class ServerChatPacket {
                 text.setType(Type.CHAT);
                 break;
         }
+        
         text.setNeedsTranslation(false);
         text.setPlatformChatId("");
         text.setParameters(null);
